@@ -1141,6 +1141,36 @@ class MVPTests(unittest.TestCase):
                             for ref in result["references"]))
         self.assertIn("并非原文引用编号", result["note"])
 
+    def test_author_year_wrapped_proceedings_entries_keep_full_record(self):
+        paper_id = "d" * 14
+        with app.db() as conn:
+            conn.execute(
+                """INSERT INTO papers(id,filename,filepath,title,status,created_at)
+                   VALUES(?,?,?,?,'ready',?)""",
+                (paper_id, "author_year_wrapped.pdf", "unused",
+                 "Author-year wrapped", app.now()),
+            )
+            conn.execute(
+                "INSERT INTO chunks(paper_id,page_no,content) VALUES(?,1,?)",
+                (paper_id,
+                 "References\n"
+                 "[Andreas et al.2016] Jacob Andreas, Marcus Rohrbach,\n"
+                 "Trevor Darrell, and Dan Klein. 2016. Learning to compose\n"
+                 "neural networks for question answering. In Proceedings of\n"
+                 "the 2016 NAACL: HLT, pages 1545–1554, San Diego, California.\n"
+                 "[Bahdanau et al.2014] Dzmitry Bahdanau, Kyunghyun Cho, and\n"
+                 "Yoshua Bengio. 2014. Neural machine translation by jointly\n"
+                 "learning to align and translate. In Proceedings of the 2014 ICLR."),
+            )
+        result = app.cited_references(paper_id)
+        self.assertEqual(len(result["references"]), 2)
+        first = result["references"][0]
+        self.assertEqual(first["citation_label"], "Andreas et al. 2016")
+        self.assertIn("Learning to compose neural networks", first["excerpt"])
+        self.assertIn("NAACL", first["excerpt"])
+        self.assertTrue(all(item["number_source"] == "author_year_arxiv_candidate"
+                            for item in result["references"]))
+
     def test_numbered_reference_drilldown_keeps_original_first_mention(self):
         paper = self.ingest_one("1706.03762v7.pdf")
         nav = app.document_navigation(paper)

@@ -13,6 +13,15 @@ from pathlib import Path
 import pymupdf
 
 
+def _clean_pdf_text(text: str) -> str:
+    """Make private-use font glyphs visibly auditable, never silently fake math."""
+    # Common Symbol/MathType private-use glyphs are not reliably decodable by
+    # PyMuPDF. Preserve an explicit text marker instead of rendering a box;
+    # the source-PDF screenshot remains the visual authority.
+    text = re.sub(r"[\uf000-\uf8ff\ufffd]", "[未解码符号]", text)
+    return text
+
+
 def equation_source_region(pdf_path: Path, page_no: int, number: int):
     """Source PDF text geometry; text remains lossy if embedded fonts are bad."""
     if type(page_no) is not int or type(number) is not int or not 1 <= number <= 999:
@@ -65,7 +74,9 @@ def equation_source_region(pdf_path: Path, page_no: int, number: int):
              if rect in neighboring),
             key=lambda item: (item[0].x0, item[0].y0),
         )
-        extracted = " ".join(" ".join(text.split()) for _, text in ordered)
+        extracted = " ".join(
+            _clean_pdf_text(" ".join(text.split())) for _, text in ordered
+        )
         return (
             [round(v, 1) for v in region], extracted[:340],
         )

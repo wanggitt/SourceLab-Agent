@@ -17,6 +17,11 @@ APPENDIX = re.compile(
 )
 
 
+def _visible_symbols(text):
+    """Expose undecodable private-font math as an explicit review marker."""
+    return re.sub(r"[\uf000-\uf8ff\ufffd]", "[未解码符号]", text)
+
+
 def _entry(kind, page, text, limit=260):
     return {"type": kind, "page_no": page, "excerpt": text[:limit],
             "source": "indexed_page_text", "confidence": "pattern_candidate"}
@@ -52,7 +57,7 @@ def build_structure(pages, headings, citations):
     seen = set()
     for page_no, text in pages:
         for raw in text.splitlines():
-            line = " ".join(raw.split())
+            line = _visible_symbols(" ".join(raw.split()))
             if not line or len(line) > 320:
                 continue
             kind = None
@@ -107,6 +112,11 @@ def build_structure(pages, headings, citations):
             "numbered_references_at_source_limit": len(citations) >= 100,
             **{name: count > MAX_ITEMS for name, count in counts.items()},
         },
+        "symbol_note": (
+            "公式候选中的 [未解码符号] 表示 PDF 私有字体/替换字符未可靠解码；"
+            "请查看原 PDF 公式截图，不得把它当作具体数学符号。"
+            if any("[未解码符号]" in item["excerpt"] for item in equations) else ""
+        ),
         "note": (
             "基于已索引原文/OCR 的页级候选：标题仅显示可识别的编号层级；"
             "图表只列图注，公式只列可识别编号附近文字，不还原 LaTeX 或图像；"

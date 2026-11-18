@@ -420,6 +420,7 @@ function showReader(paper, page = 1) {
 function renderStructure(data, paperId) {
   const box = $("#structure-results");
   box.replaceChildren(el("p", "hint", data.note));
+  if (data.symbol_note) box.append(el("p", "paper-alert", data.symbol_note));
   const allButton = $("#explain-all-equations");
   allButton.hidden = !data.equations?.length;
   if (data.equations?.length) allButton.textContent =
@@ -885,7 +886,7 @@ async function loadReferences(paperId) {
       const row = el("div", "reference-item");
       const synthetic = ref.number_source === "author_year_arxiv_candidate";
       const jump = el("button", "nav-link",
-        `${synthetic ? "候选" : `[${ref.number}]`} · 原文第 ${ref.page_no} 页 · ${
+        `${synthetic ? (ref.citation_label || "作者—年份候选") : `[${ref.number}]`} · 原文第 ${ref.page_no} 页 · ${
           ref.arxiv_id || "无明确 arXiv ID"}`);
       jump.type = "button";
       jump.onclick = () => selectPaper(paperId, ref.page_no);

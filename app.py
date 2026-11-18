@@ -2629,40 +2629,116 @@ def cited_references(paper_id, limit=150):
             entries.append(current)
             if len(entries) >= limit:
                 break
-        if len(entries) >= limit:
-            break
-    # Author–year bibliographies do not have [n] anchors. For entries that
-    # contain a concrete arXiv ID, expose a numbered *candidate* so metadata
-    # lookup/download can still be manually confirmed. The number is synthetic
-    # and never presented as an original citation number.
+    # Author–year bibliographies do not have [n] anchors. Keep one complete
+    # wrapped entry per author/year label (rather than splitting at sentence
+    # punctuation). Labels such as "[Andreas et al.2016]" are common in
+    # camera-ready references and have no arXiv ID at all.
     synthetic = False
     if not entries:
         seen_candidates = set()
         for page_no, content in pages:
-            for line in re.split(r"(?<=[.!?])\s+(?=[A-ZÀ-ÖØ-Þ])|\n{2,}", content):
-                line = re.sub(r"\s+", " ", line).strip()
-                if not line:
-                    continue
-                hit = re.search(
-                    r"(?i)(?:arxiv\s*:\s*|arxiv\.org/(?:abs|pdf)/|abs/)"
-                    r"(\d{4}\.\d{4,5})(?:v[1-9]\d*)?(?![\d.])", line,
-                )
-                year = re.search(r"\b(?:19|20)\d{2}[a-z]?\b", line)
-                # Only show non-ID lines when both author-style opening and a
-                # year are visible in the same excerpt; never guess a DOI/ID.
-                author_year_line = (
-                    not hit and year and len(line) >= 42
-                    and re.match(r"^[A-ZÀ-ÖØ-Þ][\wÀ-ÿ.'´-]+(?:,|\s+[A-Z])", line)
-                    and not line.lower().startswith(("in proceedings", "url ", "http"))
-                )
-                key = hit.group(1) if hit else line[:110].casefold()
-                if (hit or author_year_line) and key not in seen_candidates:
+            # Camera-ready author-year styles often put a compact label in
+            # square brackets, e.g. "[Andreas et al.2016]". Parse those
+            # labels first and retain all wrapped title/venue lines.
+            labelled = list(re.finditer(
+                r"(?im)^\s*\[(?P<label>[^\]\d]+?)\s*(?P<year>(?:19|20)\d{2}[a-z]?)\]\s*",
+                content,
+            ))
+            if labelled:
+                for index, match in enumerate(labelled):
+                    end = labelled[index + 1].start() if index + 1 < len(labelled) else len(content)
+                    text = re.sub(r"\s+", " ", content[match.start():end]).strip()
+                    key = match.group("label").casefold() + "|" + match.group("year").casefold()
+                    if key in seen_candidates:
+                        continue
                     seen_candidates.add(key)
                     entries.append({
                         "number": len(entries) + 1, "page_no": page_no,
-                        "text": line[:1200], "synthetic": True,
+                        "label": match.group("label").strip(),
+                        "year": match.group("year"),
+                        "text": text[:1200], "synthetic": True,
                     })
                     synthetic = True
+                    if len(entries) >= limit:
+                        break
+                if len(entries) >= limit:
+                    break
+                continue
+            # Fallback for unlabelled author-year bibliographies (legacy
+            # behavior retained, with conservative venue-line filtering).
+            current = None
+            # Permit no space before the year: "et al.2016".
+            author_year = re.compile(
+                r"^\s*\[?\s*(?P<label>[A-ZÀ-ÖØ-Þ][\wÀ-ÿ.'’´-]*"
+                r"(?:\s+(?:et\s+al\.?|and|&)\s*[A-ZÀ-ÖØ-Þ][\wÀ-ÿ.'’´-]*)*"
+                r"(?:\s+et\s+al\.?)?)\s*[,;]?\s*"
+                r"(?P<year>(?:19|20)\d{2}[a-z]?)\s*\]?\s*",
+                re.I,
+            )
+            def finish():
+                nonlocal current, synthetic
+                if not current:
+                    return
+                current["text"] = re.sub(r"\s+", " ", current["text"]).strip()[:1200]
+                key = current["label"].casefold() + "|" + current["year"].casefold()
+                if current["text"] and key not in seen_candidates:
+                    seen_candidates.add(key)
+                    current["number"] = len(entries) + 1
+                    current["synthetic"] = True
+                    entries.append(current)
+                    synthetic = True
+                current = None
+            for raw in content.splitlines():
+                line = re.sub(r"\s+", " ", raw).strip()
+                if not line:
+                    continue
+                match = author_year.match(line)
+                if match and line.casefold().startswith(
+                    ("the ", "in ", "proceedings ", "advances ", "pages ")
+                ):
+                    match = None
+                if match:
+                    finish()
+                    current = {
+                        "page_no": page_no,
+                        "label": match.group("label").strip(),
+                        "year": match.group("year"),
+                        "text": line,
+                    }
+                elif current and len(current["text"]) < 1200:
+                    # Wrapped author/title/venue lines belong to the previous
+                    # entry until the next author-year marker appears.
+                    current["text"] += " " + line
+            finish()
+            if len(entries) >= limit:
+                break
+        # Wrapped extraction can merge several bibliography records into one
+        # block. Recover explicit arXiv IDs as separate conservative
+        # candidates so an ID such as 1510.01378 is not lost.
+        known_ids = set()
+        for entry in entries:
+            hit = re.search(r"(?i)arxiv(?:\s*:\s*|\s+preprint\s+arxiv:)"
+                            r"(\d{4}\.\d{4,5})(?:v\d+)?", entry["text"])
+            if hit:
+                known_ids.add(hit.group(1))
+        for page_no, content in pages:
+            for hit in re.finditer(
+                r"(?i)(?:arxiv\s*:\s*|arxiv\.org/(?:abs|pdf)/|abs/)"
+                r"(\d{4}\.\d{4,5})(?:v[1-9]\d*)?(?![\d.])", content,
+            ):
+                identifier = hit.group(1)
+                if identifier in known_ids:
+                    continue
+                known_ids.add(identifier)
+                left = max(0, hit.start() - 320)
+                right = min(len(content), hit.end() + 420)
+                entries.append({
+                    "number": len(entries) + 1, "page_no": page_no,
+                    "label": "arXiv candidate", "year": "",
+                    "text": re.sub(r"\s+", " ", content[left:right]).strip()[:1200],
+                    "synthetic": True,
+                })
+                synthetic = True
                 if len(entries) >= limit:
                     break
             if len(entries) >= limit:
@@ -2690,6 +2766,10 @@ def cited_references(paper_id, limit=150):
         results.append({
             "number": entry["number"], "page_no": entry["page_no"],
             "excerpt": re.sub(r"\s+", " ", entry["text"])[:450],
+            "citation_label": (
+                f"{entry.get('label', '')} {entry.get('year', '')}".strip()
+                if entry.get("synthetic") else f"[{entry['number']}]"
+            ),
             "arxiv_id": identifier,
             "already_imported": bool(identifier and base_id in imported),
             "first_mention_page": first_mentions.get(entry["number"]),
