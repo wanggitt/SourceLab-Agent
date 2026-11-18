@@ -1,0 +1,95 @@
+{
+  "graph": {
+    "pairs_reviewed": {
+      "numerator": 0,
+      "denominator": 380,
+      "value": 0.0
+    },
+    "predicted_edges_reviewed": {
+      "numerator": 0,
+      "denominator": 64,
+      "value": 0.0
+    },
+    "provisional_precision_reviewed_only": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "complete_precision": null,
+    "complete_recall": null,
+    "true_positive": 0,
+    "false_positive": 0,
+    "false_negative": 0,
+    "source_page_validity_reviewed_only": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "failure_examples": [],
+    "warning": "No recall until all 380 pairs independently reviewed; PageRank never scores quality."
+  },
+  "qa": {
+    "top3_gold_page_coverage": {
+      "numerator": 4,
+      "denominator": 4,
+      "value": 1.0
+    },
+    "top3_gold_anchor_coverage": {
+      "numerator": 1,
+      "denominator": 4,
+      "value": 0.25
+    },
+    "answer_correct_human_only": {
+      "numerator": 0,
+      "denominator": 1,
+      "value": 0.0
+    },
+    "negative_correct_refusal_human_only": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "negative_no_evidence_observed": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "source_location_human_only": {
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "failure_examples": [],
+    "warning": "A missing retrieval snippet is not a model refusal; correctness and refusal require human-judged responses."
+  },
+  "layout": {
+    "figure_table_complete_crop": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "figure_table_iou": {},
+    "mean_iou_of_detected_with_gold": null,
+    "formula_correct_human_only": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "warning": "No LaTeX recovery score without independent gold LaTeX and actual decoded predictions."
+  },
+  "translation": {
+    "blocks_checked": 0,
+    "digit_preservation": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "details": [],
+    "warning": "Digit equality and glossary string match do not prove semantic translation quality."
+  },
+  "formula_explanation": {
+    "human_rated": 0,
+    "details": [],
+    "warning": "Model explanations require reviewer checks against original PDF; no generated correctness claim."
+  }
+}

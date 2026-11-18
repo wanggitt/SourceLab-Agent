@@ -1,0 +1,683 @@
+{
+  "files_requested": 20,
+  "ready": 20,
+  "unique_graph_nodes": 20,
+  "graph_edges": 64,
+  "graph_seconds": 1.643,
+  "ingest_seconds_total": 56.847,
+  "papers": [
+    {
+      "filename": "1607.06450v1.pdf",
+      "id": "b0c80aed96c74e",
+      "status": "ready",
+      "error": "",
+      "title": "Layer Normalization",
+      "pages": 14,
+      "chunks": 59,
+      "ingest_seconds": 0.738
+    },
+    {
+      "filename": "1706.03762v7.pdf",
+      "id": "0b3bd1d377f34b",
+      "status": "ready",
+      "error": "",
+      "title": "Attention Is All You Need",
+      "pages": 15,
+      "chunks": 49,
+      "ingest_seconds": 1.656
+    },
+    {
+      "filename": "1910.02054v3.pdf",
+      "id": "fb7afffb371349",
+      "status": "ready",
+      "error": "",
+      "title": "ZeRO: Memory Optimizations Toward Training Trillion",
+      "pages": 24,
+      "chunks": 84,
+      "ingest_seconds": 0.827
+    },
+    {
+      "filename": "2001.08361v1.pdf",
+      "id": "5830a00883f442",
+      "status": "ready",
+      "error": "",
+      "title": "Scaling Laws for Neural Language Models",
+      "pages": 30,
+      "chunks": 113,
+      "ingest_seconds": 3.021
+    },
+    {
+      "filename": "2002.04745v2.pdf",
+      "id": "7b24bf1b67e440",
+      "status": "ready",
+      "error": "",
+      "title": "On Layer Normalization in the Transformer Architecture",
+      "pages": 17,
+      "chunks": 84,
+      "ingest_seconds": 1.306
+    },
+    {
+      "filename": "2005.14165v4.pdf",
+      "id": "42fd83251a1545",
+      "status": "ready",
+      "error": "",
+      "title": "Language Models are Few-Shot Learners",
+      "pages": 75,
+      "chunks": 306,
+      "ingest_seconds": 2.414
+    },
+    {
+      "filename": "2010.11929v2.pdf",
+      "id": "5991f1e2baef4d",
+      "status": "ready",
+      "error": "",
+      "title": "AN IMAGE IS WORTH 16 X16 W ORDS : TRANSFORMERS FOR IMAGE RECOGNITION AT SCALE",
+      "pages": 22,
+      "chunks": 86,
+      "ingest_seconds": 1.522
+    },
+    {
+      "filename": "2103.00020v1.pdf",
+      "id": "31f2a15b259d44",
+      "status": "ready",
+      "error": "",
+      "title": "Learning Transferable Visual Models From Natural Language Supervision",
+      "pages": 48,
+      "chunks": 278,
+      "ingest_seconds": 5.77
+    },
+    {
+      "filename": "2106.09685v2.pdf",
+      "id": "fc999b60451649",
+      "status": "ready",
+      "error": "",
+      "title": "LORA: L OW-R ANK ADAPTATION OF LARGE LAN- GUAGE MODELS",
+      "pages": 26,
+      "chunks": 104,
+      "ingest_seconds": 5.421
+    },
+    {
+      "filename": "2107.03374v2.pdf",
+      "id": "f3af15e5580a4d",
+      "status": "ready",
+      "error": "",
+      "title": "Evaluating Large Language Models Trained on Code",
+      "pages": 35,
+      "chunks": 190,
+      "ingest_seconds": 1.529
+    },
+    {
+      "filename": "2201.11903v6.pdf",
+      "id": "42828b228c1e4f",
+      "status": "ready",
+      "error": "",
+      "title": "Chain-of-Thought Prompting Elicits Reasoning",
+      "pages": 43,
+      "chunks": 173,
+      "ingest_seconds": 2.202
+    },
+    {
+      "filename": "2203.02155v1.pdf",
+      "id": "e29b8bd7e33246",
+      "status": "ready",
+      "error": "",
+      "title": "Training language models to follow instructions",
+      "pages": 68,
+      "chunks": 234,
+      "ingest_seconds": 2.514
+    },
+    {
+      "filename": "2205.14135v2.pdf",
+      "id": "1b556203c8504c",
+      "status": "ready",
+      "error": "",
+      "title": "FlashAttention: Fast and Memory-Eﬃcient Exact Attention",
+      "pages": 34,
+      "chunks": 135,
+      "ingest_seconds": 1.692
+    },
+    {
+      "filename": "2206.07682v2.pdf",
+      "id": "f4f352874ea24a",
+      "status": "ready",
+      "error": "",
+      "title": "Emergent Abilities of Large Language Models",
+      "pages": 30,
+      "chunks": 119,
+      "ingest_seconds": 1.362
+    },
+    {
+      "filename": "2210.02414v2.pdf",
+      "id": "f4f1b304d10b41",
+      "status": "ready",
+      "error": "",
+      "title": "GLM-130B: A N OPEN BILINGUAL PRE-TRAINED",
+      "pages": 56,
+      "chunks": 233,
+      "ingest_seconds": 5.557
+    },
+    {
+      "filename": "2211.05100v4.pdf",
+      "id": "ac31f58c565244",
+      "status": "ready",
+      "error": "",
+      "title": "BLOOM: A 176B-Parameter Open-Access Multilingual",
+      "pages": 73,
+      "chunks": 262,
+      "ingest_seconds": 6.79
+    },
+    {
+      "filename": "2303.08774v6.pdf",
+      "id": "2d6880a9c5d24b",
+      "status": "ready",
+      "error": "",
+      "title": "GPT-4 Technical Report",
+      "pages": 100,
+      "chunks": 368,
+      "ingest_seconds": 5.745
+    },
+    {
+      "filename": "2304.08485v2.pdf",
+      "id": "bfb5277da3b34a",
+      "status": "ready",
+      "error": "",
+      "title": "Visual Instruction Tuning",
+      "pages": 25,
+      "chunks": 116,
+      "ingest_seconds": 4.27
+    },
+    {
+      "filename": "2305.14314v1.pdf",
+      "id": "5fe0d9be90e743",
+      "status": "ready",
+      "error": "",
+      "title": "QL ORA: Efficient Finetuning of Quantized LLMs",
+      "pages": 26,
+      "chunks": 110,
+      "ingest_seconds": 1.116
+    },
+    {
+      "filename": "2305.18290v3.pdf",
+      "id": "86ad2914e9d447",
+      "status": "ready",
+      "error": "",
+      "title": "Direct Preference Optimization:",
+      "pages": 27,
+      "chunks": 116,
+      "ingest_seconds": 1.395
+    }
+  ],
+  "spot_positive_edges": [
+    {
+      "source_filename": "1706.03762v7.pdf",
+      "target_filename": "1607.06450v1.pdf",
+      "expected_source_page": 10,
+      "found": true,
+      "observed_source_page": 10,
+      "excerpt": "[1] Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv preprint arXiv:1607.06450, 2016. [2] Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning",
+      "match_type": "arxiv_id",
+      "page_match": true
+    },
+    {
+      "source_filename": "2305.14314v1.pdf",
+      "target_filename": "2106.09685v2.pdf",
+      "expected_source_page": 18,
+      "found": true,
+      "observed_source_page": 18,
+      "excerpt": ". Wallis, Z. Allen-Zhu, Y . Li, S. Wang, L. Wang, and W. Chen. Lora: Low-rank adaptation of large language models. arXiv preprint arXiv:2106.09685, 2021. [29] S. Iyer, X. V . Lin, R. Pasunuru, T. Mihaylov, D. Simig, P. Yu, K. Shuster, T. Wang, Q. Liu, P. S",
+      "match_type": "arxiv_id",
+      "page_match": true
+    }
+  ],
+  "all_edges": [
+    {
+      "source_filename": "1706.03762v7.pdf",
+      "target_filename": "1607.06450v1.pdf",
+      "source_page": 10,
+      "match_type": "arxiv_id",
+      "excerpt": "[1] Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv preprint arXiv:1607.06450, 2016. [2] Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning"
+    },
+    {
+      "source_filename": "2001.08361v1.pdf",
+      "target_filename": "1706.03762v7.pdf",
+      "source_page": 30,
+      "match_type": "title",
+      "excerpt": "er, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Ł ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In I. Guyon, U. V . Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. G"
+    },
+    {
+      "source_filename": "2002.04745v2.pdf",
+      "target_filename": "1607.06450v1.pdf",
+      "source_page": 9,
+      "match_type": "arxiv_id",
+      "excerpt": "descent. arXiv preprint arXiv:1902.06720, 2019. Lei Ba, J., Kiros, J. R., and Hinton, G. E. Layer normaliza- tion. arXiv preprint arXiv:1607.06450, 2016. Liu, L., Jiang, H., He, P., Chen, W., Liu, X., Gao, J., and Han, J. On the variance of"
+    },
+    {
+      "source_filename": "2005.14165v4.pdf",
+      "target_filename": "1706.03762v7.pdf",
+      "source_page": 74,
+      "match_type": "title",
+      "excerpt": "eer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez,Łukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in neural information processing systems, 2017. [WPN+19] Alex Wang, Yada Pru"
+    },
+    {
+      "source_filename": "2005.14165v4.pdf",
+      "target_filename": "2001.08361v1.pdf",
+      "source_page": 70,
+      "match_type": "title",
+      "excerpt": "Tom B. Brown, Benjamin Chess, Rewon Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario Amodei. Scaling laws for neural language models, 2020. [KPR+19] Tom Kwiatkowski, Jennimaria Palomaki, Olivia Redﬁeld, Michael Collins, An"
+    },
+    {
+      "source_filename": "2010.11929v2.pdf",
+      "target_filename": "1706.03762v7.pdf",
+      "source_page": 12,
+      "match_type": "title",
+      "excerpt": "eer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. Attention is all you need. In NIPS, 2017. Huiyu Wang, Yukun Zhu, Bradley Green, Hartwig Adam, Alan Yuille, and Lian"
+    },
+    {
+      "source_filename": "2010.11929v2.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 10,
+      "match_type": "title",
+      "excerpt": "d Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, et al. Language models are few-shot learners. arXiv, 2020. Nicolas Carion, Francisco Massa, Gabriel Synnaeve, Nicolas Usunier, Alexand"
+    },
+    {
+      "source_filename": "2103.00020v1.pdf",
+      "target_filename": "2001.08361v1.pdf",
+      "source_page": 31,
+      "match_type": "arxiv_id",
+      "excerpt": ". B., Chess, B., Child, R., Gray, S., Radford, A., Wu, J., and Amodei, D. Scaling laws for neural language models. arXiv preprint arXiv:2001.08361, 2020. Karpathy, A., Joulin, A., and Fei-Fei, L. F. Deep fragment embeddings for bidirectiona"
+    },
+    {
+      "source_filename": "2103.00020v1.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 28,
+      "match_type": "arxiv_id",
+      "excerpt": "., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., et al. Language models are few-shot learners. arXiv preprint arXiv:2005.14165, 2020. Browne, S. Dark Matters: Surveillance of Blackness. Duke University Press, 2015. Bulen"
+    },
+    {
+      "source_filename": "2103.00020v1.pdf",
+      "target_filename": "2010.11929v2.pdf",
+      "source_page": 29,
+      "match_type": "arxiv_id",
+      "excerpt": "rer, M., Heigold, G., Gelly, S., et al. An image is worth 16x16 words: Transformers for image recognition at scale.arXiv preprint arXiv:2010.11929, 2020. Elhoseiny, M., Saleh, B., and Elgammal, A. Write a classi- ﬁer: Zero-shot learning usi"
+    },
+    {
+      "source_filename": "2106.09685v2.pdf",
+      "target_filename": "1706.03762v7.pdf",
+      "source_page": 16,
+      "match_type": "title",
+      "excerpt": "eer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Proceedings of the 31st In- ternational Conference on Neural Information Processing S"
+    },
+    {
+      "source_filename": "2106.09685v2.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 13,
+      "match_type": "arxiv_id",
+      "excerpt": "Clark, Christopher Berner, Sam McCandlish, Alec Radford, Ilya Sutskever, and Dario Amodei. Language Models are Few-Shot Learners. arXiv:2005.14165 [cs], July 2020. URL http://arxiv.org/abs/2005.14165. Jian-Feng Cai, Emmanuel J Cand`es, and "
+    },
+    {
+      "source_filename": "2107.03374v2.pdf",
+      "target_filename": "1706.03762v7.pdf",
+      "source_page": 18,
+      "match_type": "title",
+      "excerpt": "Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L. u., and Polosukhin, I. Attention is all you need. In Guyon, I., Luxburg, U. V ., Bengio, S., Wallach, H., Fergus, R., Vishwanathan, S., an"
+    },
+    {
+      "source_filename": "2107.03374v2.pdf",
+      "target_filename": "2001.08361v1.pdf",
+      "source_page": 17,
+      "match_type": "title",
+      "excerpt": "S., Henighan, T., Brown, T. B., Chess, B., Child, R., Gray, S., Radford, A., Wu, J., and Amodei, D. Scaling laws for neural language models, 2020. Kenton, Z., Everitt, T., Weidinger, L., Gabriel, I., Mikulik, V ., and Irving, G."
+    },
+    {
+      "source_filename": "2107.03374v2.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 15,
+      "match_type": "arxiv_id",
+      "excerpt": ", Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., and Amodei, D. Language models are few-shot learners. ArXiv, abs/2005.14165, 2020. Bureau of Labor Statistics, U. D. o. L. Computer programmers. Occupational Outlook Handb"
+    },
+    {
+      "source_filename": "2107.03374v2.pdf",
+      "target_filename": "2103.00020v1.pdf",
+      "source_page": 18,
+      "match_type": "arxiv_id",
+      "excerpt": "skell, A., Mishkin, P., Clark, J., et al. Learning transferable visual models from natural language su- pervision. arXiv preprint arXiv:2103.00020, 2021. Raffel, C., Shazeer, N. M., Roberts, A., Lee, K., Narang, S., Matena, M., Zhou, Y ., L"
+    },
+    {
+      "source_filename": "2201.11903v6.pdf",
+      "target_filename": "2001.08361v1.pdf",
+      "source_page": 11,
+      "match_type": "title",
+      "excerpt": "B Brown, Benjamin Chess, Rewon Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario Amodei. 2020. Scaling laws for neural language models. arXiv preprint arXiv:2001.08361. Rik Koncel-Kedziorski, Subhro Roy, Aida Amini, Nate Kus"
+    },
+    {
+      "source_filename": "2201.11903v6.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 10,
+      "match_type": "title",
+      "excerpt": "ck Clark, Christopher Berner, Sam McCandlish, Alec Radford, Ilya Sutskever, and Dario Amodei. 2020. Language models are few-shot learners. NeurIPS. Jonathon Cai, Richard Shin, and Dawn Song. 2017. Making neural programming arch"
+    },
+    {
+      "source_filename": "2201.11903v6.pdf",
+      "target_filename": "2107.03374v2.pdf",
+      "source_page": 10,
+      "match_type": "title",
+      "excerpt": "iveira Pinto, Jared Kaplan, Harri Edwards, Yuri Burda, Nicholas Joseph, Greg Brockman, et al. 2021. Evaluating large language models trained on code. arXiv preprint arXiv:2107.03374. Xinyun Chen, Chen Liang, Adams Wei Yu, Denny Zhou, Dawn"
+    },
+    {
+      "source_filename": "2201.11903v6.pdf",
+      "target_filename": "2203.02155v1.pdf",
+      "source_page": 12,
+      "match_type": "title",
+      "excerpt": ". Wainwright, Pamela Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, et al. 2022. Training language models to follow instructions with human feedback. arXiv preprint arXiv:2203.02155. Arkil Patel, Satwik Bhattamishra, a"
+    },
+    {
+      "source_filename": "2201.11903v6.pdf",
+      "target_filename": "2206.07682v2.pdf",
+      "source_page": 14,
+      "match_type": "title",
+      "excerpt": "t Zoph, Sebastian Borgeaud, Dani Yogatama, Maarten Bosma, Denny Zhou, Donald Metzler, et al. 2022b. Emergent abilities of large language models. Transactions on Machine Learning Research. Sarah Wiegreffe, Jack Hessel, Swabha Swayamdi"
+    },
+    {
+      "source_filename": "2203.02155v1.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 22,
+      "match_type": "title",
+      "excerpt": "h, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., et al. (2020). Language models are few-shot learners. arXiv preprint arXiv:2005.14165. Buchanan, B., Lohn, A., Musser, M., and Sedova, K. (202"
+    },
+    {
+      "source_filename": "2203.02155v1.pdf",
+      "target_filename": "2107.03374v2.pdf",
+      "source_page": 22,
+      "match_type": "title",
+      "excerpt": ", Pinto, H. P. d. O., Kaplan, J., Edwards, H., Burda, Y ., Joseph, N., Brockman, G., et al. (2021). Evaluating large language models trained on code. arXiv preprint arXiv:2107.03374. Cho, W. S., Zhang, P., Zhang, Y ., Li, X., Galley, M.,"
+    },
+    {
+      "source_filename": "2205.14135v2.pdf",
+      "target_filename": "1706.03762v7.pdf",
+      "source_page": 15,
+      "match_type": "title",
+      "excerpt": "eer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. Attention is all you need.Advances in neural information processing systems, 30, 2017. [83] Hongyu Wang, Shuming Ma"
+    },
+    {
+      "source_filename": "2205.14135v2.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 11,
+      "match_type": "title",
+      "excerpt": "D Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, et al. Language models are few-shot learners. Advances in neural information processing systems, 33:1877–1901, 2020. [6] Ilias Chalkid"
+    },
+    {
+      "source_filename": "2206.07682v2.pdf",
+      "target_filename": "2001.08361v1.pdf",
+      "source_page": 15,
+      "match_type": "arxiv_id",
+      "excerpt": "Chess, Rewon Child, Scott Gray, Alec Radford, Jeﬀrey Wu, and Dario Amodei. Scaling laws for neural language models.arXiv preprint arXiv:2001.08361, 2020. URL https://arxiv.org/abs/2001.08361. Takeshi Kojima, Shixiang Shane Gu, Machel Reid, "
+    },
+    {
+      "source_filename": "2206.07682v2.pdf",
+      "target_filename": "2201.11903v6.pdf",
+      "source_page": 18,
+      "match_type": "title",
+      "excerpt": "ZrGCozdqR. Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Ed Chi, Quoc Le, and Denny Zhou. Chain of thought prompting elicits reasoning in large language models.NeurIPS, 2022b. URLhttps://arxiv. org/abs/2201.11903. Laura Weid"
+    },
+    {
+      "source_filename": "2206.07682v2.pdf",
+      "target_filename": "2203.02155v1.pdf",
+      "source_page": 16,
+      "match_type": "arxiv_id",
+      "excerpt": "hini Agarwal, Katarina Slama, Alex Ray, et al. Training language models to follow instructions with human feedback.arXiv preprint arXiv:2203.02155, 2022. URLhttps://arxiv.org/abs/2203.02155. Kishore Papineni, Salim Roukos, Todd Ward, and We"
+    },
+    {
+      "source_filename": "2210.02414v2.pdf",
+      "target_filename": "1607.06450v1.pdf",
+      "source_page": 11,
+      "match_type": "arxiv_id",
+      "excerpt": "arXiv preprint arXiv:2112.10684, 2021. Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv preprint arXiv:1607.06450, 2016. Stephen Bach, Victor Sanh, Zheng Xin Yong, Albert Webson, Colin Raffel, Nihal V Nayak,"
+    },
+    {
+      "source_filename": "2210.02414v2.pdf",
+      "target_filename": "1706.03762v7.pdf",
+      "source_page": 18,
+      "match_type": "title",
+      "excerpt": "eer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. Attention is all you need. Advances in neural informa- tion processing systems, 30, 2017. David Wadden, Ulme Wennbe"
+    },
+    {
+      "source_filename": "2210.02414v2.pdf",
+      "target_filename": "2002.04745v2.pdf",
+      "source_page": 19,
+      "match_type": "title",
+      "excerpt": "Di He, Kai Zheng, Shuxin Zheng, Chen Xing, Huishuai Zhang, Yanyan Lan, Liwei Wang, and Tieyan Liu. On layer normalization in the transformer architecture. In International Conference on Machine Learning, pp. 10524–10533. PMLR, 2020. Liang X"
+    },
+    {
+      "source_filename": "2210.02414v2.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 12,
+      "match_type": "title",
+      "excerpt": "D Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, et al. Language models are few-shot learners. Advances in neural information processing systems, 33:1877–1901, 2020. Nicola De Cao, Wi"
+    },
+    {
+      "source_filename": "2210.02414v2.pdf",
+      "target_filename": "2201.11903v6.pdf",
+      "source_page": 19,
+      "match_type": "arxiv_id",
+      "excerpt": "ten Bosma, Ed Chi, Quoc Le, and Denny Zhou. Chain of thought prompting elicits reasoning in large language models. arXiv preprint arXiv:2201.11903, 2022c. Laura Weidinger, John Mellor, Maribeth Rauh, Conor Griffin, Jonathan Uesato, Po-Sen H"
+    },
+    {
+      "source_filename": "2210.02414v2.pdf",
+      "target_filename": "2206.07682v2.pdf",
+      "source_page": 19,
+      "match_type": "arxiv_id",
+      "excerpt": "d, Dani Yo- gatama, Maarten Bosma, Denny Zhou, Donald Metzler, et al. Emergent abilities of large language models. arXiv preprint arXiv:2206.07682, 2022b. Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Ed Chi, Quoc Le, and Denny Zh"
+    },
+    {
+      "source_filename": "2210.02414v2.pdf",
+      "target_filename": "2211.05100v4.pdf",
+      "source_page": 17,
+      "match_type": "arxiv_id",
+      "excerpt": "Luccioni, François Yvon, Matthias Gallé, et al. Bloom: A 176b- parameter open-access multilingual language model. arXiv preprint arXiv:2211.05100, 2022. Timo Schick, Sahana Udupa, and Hinrich Schütze. Self-diagnosis and self-debiasing: A pr"
+    },
+    {
+      "source_filename": "2211.05100v4.pdf",
+      "target_filename": "1706.03762v7.pdf",
+      "source_page": 62,
+      "match_type": "title",
+      "excerpt": "eer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention is all you need. Advances in neural information processing systems, 30, 2017. Oriol Vinyals and Quoc V. L"
+    },
+    {
+      "source_filename": "2211.05100v4.pdf",
+      "target_filename": "1910.02054v3.pdf",
+      "source_page": 59,
+      "match_type": "title",
+      "excerpt": "Learn. Res., 21(140):1–67, 2020. Samyam Rajbhandari, Jeff Rasley, Olatunji Ruwase, and Yuxiong He. ZeRO: Memory optimizations toward training trillion parameter models.SC20: International Conference for High Performance Computing, Networkin"
+    },
+    {
+      "source_filename": "2211.05100v4.pdf",
+      "target_filename": "2001.08361v1.pdf",
+      "source_page": 53,
+      "match_type": "arxiv_id",
+      "excerpt": "ess, Rewon Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario Amodei. Scaling laws for neural language models. arXiv preprint arXiv:2001.08361, 2020. Boseop Kim, HyoungSeok Kim, Sang-Woo Lee, Gichang Lee, Donghyun Kwak, Jeon Dong Hyeon,"
+    },
+    {
+      "source_filename": "2211.05100v4.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 48,
+      "match_type": "title",
+      "excerpt": "ss, Jack Clark, Christopher Berner, Sam McCandlish, Alec Radford, Ilya Sutskever, and Dario Amodei. Language models are few-shot learners.Advances in Neural Information Processing Systems, 2020. Isaac Caswell, Julia Kreutzer, L"
+    },
+    {
+      "source_filename": "2211.05100v4.pdf",
+      "target_filename": "2107.03374v2.pdf",
+      "source_page": 48,
+      "match_type": "arxiv_id",
+      "excerpt": "rri Edwards, Yuri Burda, Nicholas Joseph, Greg Brockman, et al. Eval- uating large language models trained on code.arXiv preprint arXiv:2107.03374, 2021. 48"
+    },
+    {
+      "source_filename": "2211.05100v4.pdf",
+      "target_filename": "2206.07682v2.pdf",
+      "source_page": 63,
+      "match_type": "title",
+      "excerpt": "Metzler, Ed H. Chi, Tatsunori Hashimoto, Oriol Vinyals, Percy Liang, Jeff Dean, and William Fedus. Emergent abilities of large language models.Transactions on Machine Learning Research, 2022. Laura S. Westra and Bill E. Lawson.Faces"
+    },
+    {
+      "source_filename": "2211.05100v4.pdf",
+      "target_filename": "2210.02414v2.pdf",
+      "source_page": 64,
+      "match_type": "arxiv_id",
+      "excerpt": "ai, Ming Ding, Zhuoyi Yang, Yifan Xu, Wendi Zheng, Xiao Xia, et al. Glm-130b: An open bilingual pre-trained model. arXiv preprint arXiv:2210.02414, 2022. Wei Zeng, Xiaozhe Ren, Teng Su, Hui Wang, Yi Liao, Zhiwei Wang, Xin Jiang, ZhenZhang Y"
+    },
+    {
+      "source_filename": "2303.08774v6.pdf",
+      "target_filename": "1607.06450v1.pdf",
+      "source_page": 18,
+      "match_type": "arxiv_id",
+      "excerpt": "preprint arXiv:1804.04235, 2018. [10] Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E. Hinton. Layer normalization. arXiv preprint arXiv:1607.06450, 2016. [11] Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Ed Chi, Quoc Le, and Denn"
+    },
+    {
+      "source_filename": "2303.08774v6.pdf",
+      "target_filename": "1706.03762v7.pdf",
+      "source_page": 20,
+      "match_type": "title",
+      "excerpt": "eer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. Attention is all you need. NeurIPS, 2017. [40] Paul F Christiano, Jan Leike, Tom Brown, Miljan Martic, Shane Legg,"
+    },
+    {
+      "source_filename": "2303.08774v6.pdf",
+      "target_filename": "2001.08361v1.pdf",
+      "source_page": 19,
+      "match_type": "arxiv_id",
+      "excerpt": "ess, Rewon Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario Amodei. Scaling laws for neural language models. arXiv preprint arXiv:2001.08361, 2020. [15] Tom Henighan, Jared Kaplan, Mor Katz, Mark Chen, Christopher Hesse, Jacob Jackson"
+    },
+    {
+      "source_filename": "2303.08774v6.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 18,
+      "match_type": "title",
+      "excerpt": ". Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, et al. Language models are few-shot learners. Advances in Neural Information Processing Systems, 33:1877–1901, 2020. [2] Jordan Hoffma"
+    },
+    {
+      "source_filename": "2303.08774v6.pdf",
+      "target_filename": "2107.03374v2.pdf",
+      "source_page": 20,
+      "match_type": "title",
+      "excerpt": "er, Peter Welinder, Bob McGrew, Dario Amodei, Sam McCandlish, Ilya Sutskever, and Wojciech Zaremba. Evaluating large language models trained on code. 2021. [44] Ian McKenzie, Alexander Lyzhov, Alicia Parrish, Ameya Prabhu, Aaron Mueller,"
+    },
+    {
+      "source_filename": "2303.08774v6.pdf",
+      "target_filename": "2201.11903v6.pdf",
+      "source_page": 18,
+      "match_type": "title",
+      "excerpt": "2016. [11] Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Ed Chi, Quoc Le, and Denny Zhou. Chain-of-thought prompting elicits reasoning in large language models. NeurIPS, 2022. [12] Jiaxin Huang, Shixiang Shane Gu, Le Hou, Yu"
+    },
+    {
+      "source_filename": "2303.08774v6.pdf",
+      "target_filename": "2203.02155v1.pdf",
+      "source_page": 22,
+      "match_type": "arxiv_id",
+      "excerpt": "ini Agarwal, Katarina Slama, Alex Ray, et al. Training language models to follow instructions with human feedback. arXiv preprint arXiv:2203.02155, 2022. [64] OpenAI. OpenAI: Introducing ChatGPT, 2022. URL https://openai.com/blog/chatgpt. ["
+    },
+    {
+      "source_filename": "2303.08774v6.pdf",
+      "target_filename": "2205.14135v2.pdf",
+      "source_page": 20,
+      "match_type": "arxiv_id",
+      "excerpt": "rmon, Atri Rudra, and Christopher Ré. Flashattention: Fast and memory-efficient exact attention with io-awareness. arXiv preprint arXiv:2205.14135, 2022. [32] Rewon Child, Scott Gray, Alec Radford, and Ilya Sutskever. Generating long sequen"
+    },
+    {
+      "source_filename": "2303.08774v6.pdf",
+      "target_filename": "2206.07682v2.pdf",
+      "source_page": 19,
+      "match_type": "title",
+      "excerpt": ", Barret Zoph, Sebastian Borgeaud, Dani Yogatama, Maarten Bosma, Denny Zhou, Donald Metzler, et al. Emergent abilities of large language models. TMLR, 2022. [20] Mostafa Dehghani, Stephan Gouws, Oriol Vinyals, Jakob Uszkoreit, and Lu"
+    },
+    {
+      "source_filename": "2303.08774v6.pdf",
+      "target_filename": "2211.05100v4.pdf",
+      "source_page": 19,
+      "match_type": "arxiv_id",
+      "excerpt": "a Luccioni, François Yvon, Matthias Gallé, et al. Bloom: A 176B-parameter open-access multilingual language model. arXiv preprint arXiv:2211.05100, 2022. [27] Susan Zhang, Stephen Roller, Naman Goyal, Mikel Artetxe, Moya Chen, Shuohui Chen,"
+    },
+    {
+      "source_filename": "2304.08485v2.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 10,
+      "match_type": "title",
+      "excerpt": "D Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, et al. Language models are few-shot learners. Advances in neural information processing systems , 33:1877–1901, 2020. 2 [8] Soravit Ch"
+    },
+    {
+      "source_filename": "2304.08485v2.pdf",
+      "target_filename": "2103.00020v1.pdf",
+      "source_page": 12,
+      "match_type": "arxiv_id",
+      "excerpt": "Askell, Pamela Mishkin, Jack Clark, et al. Learning transferable visual models from natural language supervision. arXiv preprint arXiv:2103.00020, 2021. 1, 2, 4 [41] Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang, Mi"
+    },
+    {
+      "source_filename": "2304.08485v2.pdf",
+      "target_filename": "2203.02155v1.pdf",
+      "source_page": 12,
+      "match_type": "title",
+      "excerpt": "Carroll Wainwright, Pamela Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, et al. Training language models to follow instructions with human feedback. Advances in Neural Information Processing Systems , 35:27730–27744,"
+    },
+    {
+      "source_filename": "2304.08485v2.pdf",
+      "target_filename": "2303.08774v6.pdf",
+      "source_page": 12,
+      "match_type": "title",
+      "excerpt": ", 2022. 2, 5, 8, 9 [35] OpenAI. ChatGPT. https://openai.com/blog/chatgpt/, 2023. 1, 2 [36] OpenAI. Gpt-4 technical report, 2023. 1, 5, 6, 15 [37] Long Ouyang, Jeffrey Wu, Xu Jiang, Diogo Almeida, Carroll Wainwri"
+    },
+    {
+      "source_filename": "2305.14314v1.pdf",
+      "target_filename": "2106.09685v2.pdf",
+      "source_page": 18,
+      "match_type": "arxiv_id",
+      "excerpt": ". Wallis, Z. Allen-Zhu, Y . Li, S. Wang, L. Wang, and W. Chen. Lora: Low-rank adaptation of large language models. arXiv preprint arXiv:2106.09685, 2021. [29] S. Iyer, X. V . Lin, R. Pasunuru, T. Mihaylov, D. Simig, P. Yu, K. Shuster, T. Wa"
+    },
+    {
+      "source_filename": "2305.14314v1.pdf",
+      "target_filename": "2201.11903v6.pdf",
+      "source_page": 20,
+      "match_type": "title",
+      "excerpt": "2021. [63] J. Wei, X. Wang, D. Schuurmans, M. Bosma, F. Xia, E. H. Chi, Q. V . Le, D. Zhou, et al. Chain-of-thought prompting elicits reasoning in large language models. In Advances in Neural Information Processing Systems, 2022. [64"
+    },
+    {
+      "source_filename": "2305.14314v1.pdf",
+      "target_filename": "2203.02155v1.pdf",
+      "source_page": 19,
+      "match_type": "title",
+      "excerpt": "Wu, X. Jiang, D. Almeida, C. Wainwright, P. Mishkin, C. Zhang, S. Agarwal, K. Slama, A. Ray, et al. Training language models to follow instructions with human feedback. Advances in Neural Information Processing Systems, 35:27730–27744, 2"
+    },
+    {
+      "source_filename": "2305.14314v1.pdf",
+      "target_filename": "2210.02414v2.pdf",
+      "source_page": 20,
+      "match_type": "arxiv_id",
+      "excerpt": "Z. Wang, H. Lai, M. Ding, Z. Yang, Y . Xu, W. Zheng, X. Xia, et al. Glm-130b: An open bilingual pre-trained model. arXiv preprint arXiv:2210.02414, 2022. 20"
+    },
+    {
+      "source_filename": "2305.14314v1.pdf",
+      "target_filename": "2211.05100v4.pdf",
+      "source_page": 19,
+      "match_type": "arxiv_id",
+      "excerpt": "stagné, A. S. Luccioni, F. Yvon, M. Gallé, et al. Bloom: A 176b-parameter open-access multilingual language model. arXiv preprint arXiv:2211.05100, 2022. [53] S. Shaphiro and M. Wilk. An analysis of variance test for normality.Biometrika, 5"
+    },
+    {
+      "source_filename": "2305.14314v1.pdf",
+      "target_filename": "2303.08774v6.pdf",
+      "source_page": 19,
+      "match_type": "title",
+      "excerpt": "Conference on Empirical Methods in Natural Language Processing, pages 2392–2400, 2018. [42] OpenAI. Gpt-4 technical report. arXiv, 2023. [43] L. Ouyang, J. Wu, X. Jiang, D. Almeida, C. Wainwright, P. Mishkin, C."
+    },
+    {
+      "source_filename": "2305.18290v3.pdf",
+      "target_filename": "2005.14165v4.pdf",
+      "source_page": 11,
+      "match_type": "title",
+      "excerpt": "yder, M. Subbiah, J. D. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, et al. Language models are few-shot learners. Advances in neural information processing systems, 33:1877–1901, 2020. [8] S. Bubeck, V"
+    },
+    {
+      "source_filename": "2305.18290v3.pdf",
+      "target_filename": "2203.02155v1.pdf",
+      "source_page": 13,
+      "match_type": "title",
+      "excerpt": ", F. Kelton, L. Miller, M. Simens, A. Askell, P. Welinder, P. F. Christiano, J. Leike, and R. Lowe. Training language models to follow instructions with human feedback. In S. Koyejo, S. Mohamed, A. Agarwal, D. Belgrave, K. Cho, and A. Oh"
+    }
+  ],
+  "limitations": "这 20 篇是 Transformer/大模型相关的局域样本，不是严格单一方向的完整引文全集；只人工抽查了两条已知正例。边总数≠准确边数，未人工标注全部参考文献，不能报告边精确率或召回率。运行耗时仅是本机一次测试，不含浏览器交互/内存峰值。"
+}

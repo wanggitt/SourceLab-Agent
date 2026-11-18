@@ -1,0 +1,6 @@
+{
+  "report_path": "tests/graph20_report.json",
+  "report_sha256": "6543459ba78365041dadd54f49ebc7a82931624c72c3d1fe2c292b50b571c031",
+  "sample": "20 works; all 380 directed non-self pairs; local graph only",
+  "criterion": "gold_cites_target must be independently checked in source PDF References"
+}

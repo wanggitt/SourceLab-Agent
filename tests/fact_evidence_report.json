@@ -1,0 +1,319 @@
+{
+  "source_file": "1706.03762v7.pdf",
+  "sample_size": 5,
+  "top_3_page_hits": 5,
+  "top_3_all_anchor_coverage": 5,
+  "top_3_single_passage_coverage": 5,
+  "cases": [
+    {
+      "case_id": "author_6_affiliation",
+      "question": "Attention Is All You Need 的第六位作者是谁，在哪个机构工作？",
+      "expected_pages": [
+        1
+      ],
+      "reference_answer_human_label": "Aidan N. Gomez；University of Toronto。",
+      "top_3": [
+        {
+          "chunk_id": 1,
+          "page_no": 1,
+          "retrieval": "BM25+LSA"
+        },
+        {
+          "chunk_id": 4,
+          "page_no": 1,
+          "retrieval": "BM25+LSA"
+        },
+        {
+          "chunk_id": 16,
+          "page_no": 5,
+          "retrieval": "BM25+LSA"
+        }
+      ],
+      "page_hit": true,
+      "anchor_matches": {
+        "Aidan N. Gomez": [
+          {
+            "chunk_id": 1,
+            "page_no": 1,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "University of Toronto": [
+          {
+            "chunk_id": 1,
+            "page_no": 1,
+            "retrieval": "BM25+LSA"
+          }
+        ]
+      },
+      "all_anchors_in_top_3": true,
+      "single_passage_covers_all_anchors": true
+    },
+    {
+      "case_id": "adam_beta",
+      "question": "这篇论文中 Adam 优化器的 β1 和 β2 分别设为多少？",
+      "expected_pages": [
+        7
+      ],
+      "reference_answer_human_label": "β1=0.9；β2=0.98。",
+      "top_3": [
+        {
+          "chunk_id": 26,
+          "page_no": 7,
+          "retrieval": "BM25+LSA"
+        },
+        {
+          "chunk_id": 41,
+          "page_no": 11,
+          "retrieval": "BM25+LSA"
+        },
+        {
+          "chunk_id": 27,
+          "page_no": 8,
+          "retrieval": "BM25"
+        }
+      ],
+      "page_hit": true,
+      "anchor_matches": {
+        "Adam optimizer": [
+          {
+            "chunk_id": 26,
+            "page_no": 7,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "0.9": [
+          {
+            "chunk_id": 26,
+            "page_no": 7,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "0.98": [
+          {
+            "chunk_id": 26,
+            "page_no": 7,
+            "retrieval": "BM25+LSA"
+          }
+        ]
+      },
+      "all_anchors_in_top_3": true,
+      "single_passage_covers_all_anchors": true
+    },
+    {
+      "case_id": "base_gpu",
+      "question": "Transformer base 模型训练使用多少张 GPU？具体是什么型号？",
+      "expected_pages": [
+        7
+      ],
+      "reference_answer_human_label": "一台机器上的 8 张 NVIDIA P100 GPU。",
+      "top_3": [
+        {
+          "chunk_id": 30,
+          "page_no": 8,
+          "retrieval": "BM25+LSA"
+        },
+        {
+          "chunk_id": 25,
+          "page_no": 7,
+          "retrieval": "BM25+LSA"
+        },
+        {
+          "chunk_id": 7,
+          "page_no": 2,
+          "retrieval": "BM25+LSA"
+        }
+      ],
+      "page_hit": true,
+      "anchor_matches": {
+        "8 NVIDIA P100 GPUs": [
+          {
+            "chunk_id": 25,
+            "page_no": 7,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "base models": [
+          {
+            "chunk_id": 25,
+            "page_no": 7,
+            "retrieval": "BM25+LSA"
+          }
+        ]
+      },
+      "all_anchors_in_top_3": true,
+      "single_passage_covers_all_anchors": true
+    },
+    {
+      "case_id": "big_en_de_bleu",
+      "question": "Transformer big 的 English-to-German BLEU 分数和此前最佳集成系统的分数分别是多少？",
+      "expected_pages": [
+        8
+      ],
+      "reference_answer_human_label": "Transformer (big) 为 28.4；表 2 中最佳此前集成系统 ConvS2S Ensemble 为 26.36。按表中数字相减约提升 2.04。",
+      "top_3": [
+        {
+          "chunk_id": 27,
+          "page_no": 8,
+          "retrieval": "BM25+LSA"
+        },
+        {
+          "chunk_id": 28,
+          "page_no": 8,
+          "retrieval": "BM25+LSA"
+        },
+        {
+          "chunk_id": 2,
+          "page_no": 1,
+          "retrieval": "BM25+LSA"
+        }
+      ],
+      "page_hit": true,
+      "anchor_matches": {
+        "ConvS2S Ensemble": [
+          {
+            "chunk_id": 27,
+            "page_no": 8,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "26.36": [
+          {
+            "chunk_id": 27,
+            "page_no": 8,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "Transformer (big)": [
+          {
+            "chunk_id": 27,
+            "page_no": 8,
+            "retrieval": "BM25+LSA"
+          },
+          {
+            "chunk_id": 28,
+            "page_no": 8,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "28.4": [
+          {
+            "chunk_id": 27,
+            "page_no": 8,
+            "retrieval": "BM25+LSA"
+          },
+          {
+            "chunk_id": 28,
+            "page_no": 8,
+            "retrieval": "BM25+LSA"
+          }
+        ]
+      },
+      "all_anchors_in_top_3": true,
+      "single_passage_covers_all_anchors": true
+    },
+    {
+      "case_id": "layer_norm_reference",
+      "question": "列出论文引用的 Layer Normalization 文献的作者、年份和 arXiv 编号。",
+      "expected_pages": [
+        10
+      ],
+      "reference_answer_human_label": "Jimmy Lei Ba、Jamie Ryan Kiros、Geoffrey E Hinton；2016；arXiv:1607.06450。",
+      "top_3": [
+        {
+          "chunk_id": 37,
+          "page_no": 10,
+          "retrieval": "BM25+LSA"
+        },
+        {
+          "chunk_id": 38,
+          "page_no": 10,
+          "retrieval": "BM25+LSA"
+        },
+        {
+          "chunk_id": 10,
+          "page_no": 3,
+          "retrieval": "BM25+LSA"
+        }
+      ],
+      "page_hit": true,
+      "anchor_matches": {
+        "Jimmy Lei Ba": [
+          {
+            "chunk_id": 37,
+            "page_no": 10,
+            "retrieval": "BM25+LSA"
+          },
+          {
+            "chunk_id": 38,
+            "page_no": 10,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "Jamie Ryan Kiros": [
+          {
+            "chunk_id": 37,
+            "page_no": 10,
+            "retrieval": "BM25+LSA"
+          },
+          {
+            "chunk_id": 38,
+            "page_no": 10,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "Geoffrey E Hinton": [
+          {
+            "chunk_id": 37,
+            "page_no": 10,
+            "retrieval": "BM25+LSA"
+          },
+          {
+            "chunk_id": 38,
+            "page_no": 10,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "1607.06450": [
+          {
+            "chunk_id": 37,
+            "page_no": 10,
+            "retrieval": "BM25+LSA"
+          },
+          {
+            "chunk_id": 38,
+            "page_no": 10,
+            "retrieval": "BM25+LSA"
+          }
+        ],
+        "2016": [
+          {
+            "chunk_id": 37,
+            "page_no": 10,
+            "retrieval": "BM25+LSA"
+          },
+          {
+            "chunk_id": 38,
+            "page_no": 10,
+            "retrieval": "BM25+LSA"
+          }
+        ]
+      },
+      "all_anchors_in_top_3": true,
+      "single_passage_covers_all_anchors": true
+    }
+  ],
+  "negative_controls": [
+    {
+      "question": "zzqplmxyvvvzz",
+      "no_retrieved_evidence": true,
+      "note": "验证此具体负例没有返回证据；无词匹配与明确数字约束不能证明所有自然语言虚构事实都会被拒答。"
+    },
+    {
+      "question": "What GPU was used to train fictional XQ-9999 accelerator?",
+      "no_retrieved_evidence": true,
+      "note": "验证此具体负例没有返回证据；无词匹配与明确数字约束不能证明所有自然语言虚构事实都会被拒答。"
+    }
+  ],
+  "limits": "标签经人工对照该版 PDF 创建；仅检查前 3 条检索片段中是否出现精确词串及页码，不是问答事实正确率、推理有效性或语义蕴含率。人工作答是独立参考标签，程序并未自动生成该答案。"
+}

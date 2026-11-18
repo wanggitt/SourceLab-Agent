@@ -1,0 +1,128 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8">
+<title>SourceLab 问答人工真值填写</title>
+<style>body{font:16px/1.6 system-ui,"Microsoft YaHei",sans-serif;
+max-width:1050px;margin:24px auto;padding:0 18px;color:#193042}
+button,input,select,textarea{font:inherit}button{padding:5px 12px;margin:4px;cursor:pointer}
+textarea{width:98%;min-height:65px}label{display:block;margin:12px 0}
+section{border:1px solid #b6cbd6;border-radius:8px;padding:16px;margin:12px 0}
+</style>
+<h1>原文问答：人工真值填写</h1>
+<p>只在本机运行，未调用 AI。核对原论文物理页（从 1 开始）后填写。
+定期导出 JSON，覆盖 <code>tests/human_eval/qa_labels.json</code>；刷新程序页面不会自动写回磁盘。
+已有问题不能覆盖全部任务类型，可在 JSON 中复制条目并增加唯一 id。</p>
+<p id="progress"></p>
+<section><h2 id="question"></h2><p id="papers"></p>
+<label>是否可从所选论文回答
+<select id="answerable"><option value="">待标</option><option value="true">有足够证据</option>
+<option value="false">不可回答/证据不足</option></select></label>
+<label>人工标准答案（不可回答时写无法确定）<textarea id="answer"></textarea></label>
+<label>单篇 PDF 物理页（逗号分隔）<input id="pages" size="65"></label>
+<label>单篇原文证据短语（每行一个，精确包含匹配）<textarea id="anchors"></textarea></label>
+<label>跨论文每篇金标准页（可选；单篇论文留 <code>{}</code>），JSON 对象，例如 {"a.pdf":[4],"b.pdf":[8]}
+<textarea id="crosspages"></textarea></label>
+<label>跨论文每篇证据词组（可选；单篇论文留 <code>{}</code>）。必须是原文短语；推荐严格 JSON，例如 {"a.pdf":["attention"],"b.pdf":["normalization"]}。
+也兼容方括号中的未加引号短词，但导出时会自动规范化。
+<textarea id="crossanchors"></textarea></label>
+<label>网站实际答复（若没有向模型提问则留空）
+<textarea id="model"></textarea></label>
+<label>人工判定实际答复<select id="review"><option value="">未审</option>
+<option value="correct">正确</option><option value="partial">部分正确</option>
+<option value="incorrect">错误</option><option value="correct_refusal">正确拒答</option></select></label>
+<label>证据跳转/高亮位置人工判定<select id="location"><option value="">未审</option>
+<option value="correct">正确位置</option><option value="incorrect">定位错误</option></select></label>
+<label>审核人 <input id="reviewer"></label>
+<label>原因或失败类型 <textarea id="notes"></textarea></label>
+</section>
+<button onclick="move(-1)">← 上一题</button><button onclick="move(1)">下一题 →</button>
+<button onclick="exportData()">导出问答真值 JSON</button>
+<label>导入先前标注 JSON <input id="import" type="file" accept=".json,application/json"></label>
+<script>
+const seed=[{"id": "q01", "task_type": "fact", "source_pdfs": ["1706.03762v7.pdf"], "question": "Transformer base 模型使用什么硬件？", "answerable": true, "gold_answer": "在 8 块 P100 GPU 上，训练耗时 3.5 天；我们通过将训练时间、使用的 GPU 数量以及每块 GPU 的持续单精度浮点运算能力估算值相乘，来估算训练模型所消耗的浮点运算次数。我们分别采用 K80、K40、M40 和 P100 的 2.8、3.7、6.0 和 9.5 TFLOPS 作为其持续单精度浮点运算能力的估算值。", "gold_pages": [8], "gold_anchors": ["Training took 3.5 days on 8 P100 GPUs;We estimate the number of floating point operations used to train a", "model by multiplying the training time,the number of GPUs used,and an estimate of the sustained", "single-precision floating-point capacity of each GPU5. We used values of 2.8,3.7,6.0 and 9.5 TFLOPS for K80,K40,M40 and P100, espectively"], "answer_review": "partial", "evidence_location_review": "correct", "reviewer": "w", "notes": "少了一小段，可能是因为在脚注页面边缘的原因", "model_answer": "Transformer base 模型在一台配备 8 块 NVIDIA P100 GPU 的机器上训练 [7]。base 模型每个训练步约耗时 0.4 秒，共训练 100,000 步或 12 小时 [7]。", "gold_pages_by_pdf": {}, "gold_anchors_by_pdf": {}}, {"id": "q02", "task_type": "negative", "source_pdfs": ["1706.03762v7.pdf"], "question": "论文是否证明 Transformer 在所有语言任务上永远优于其他方法？", "answerable": null, "gold_answer": "否。论文没有证明 Transformer 在所有语言任务上永远优于其他方法；它只报告了在特定机器翻译任务和英语句法分析任务上的实验结果。", "gold_pages": [1, 9], "gold_anchors": ["Experiments on two machine translation tasks show these models to be superior in quality", "We show that the Transformer generalizes well to other tasks", "English constituency parsing both with large and limited training data"], "answer_review": null, "evidence_location_review": null, "reviewer": "w", "notes": "论文仅展示有限任务上的优越性与泛化实验，未给出“所有语言任务、永远优于其他方法”的证明。", "model_answer": "已找到以下原文片段。模型接口或草稿校验未通过，不对片段进行事实推断；请点击来源核对。", "gold_pages_by_pdf": {}, "gold_anchors_by_pdf": {}}, {"id": "q03", "task_type": "cross_paper", "source_pdfs": ["1706.03762v7.pdf", "1607.06450v1.pdf"], "question": "这两篇论文在归一化的作用上有什么有据可查的联系？", "answerable": true, "gold_answer": "有据可查的联系是：Transformer 在编码器和解码器的每个子层中采用“残差连接后接 layer normalization”，并引用 [1]；Layer Normalization 论文提出 layer normalization 是对单个训练样本中一层所有 summed inputs 计算均值和方差来进行归一化，不依赖 mini-batch，训练与测试计算一致，并可逐时间步用于 RNN、稳定隐藏状态动态。因此联系是 Transformer 采用了该论文提出的层归一化机制用于子层输出归一化/训练稳定；但不能据此推断两文对归一化作用的全部动机和实验结论完全相同。", "gold_pages": [], "gold_anchors": [], "answer_review": null, "evidence_location_review": null, "reviewer": "", "notes": "跨论文证据链为 Transformer 引用并采用 layer normalization，Layer Normalization 论文给出其逐样本、层内归一化定义及适用 RNN/稳定训练的作用；需注意两文作用表述侧重不同，不能扩大为完全相同结论。", "model_answer": "", "gold_pages_by_pdf": {"1706.03762v7.pdf": [3], "1607.06450v1.pdf": [1, 2, 3]}, "gold_anchors_by_pdf": {"1706.03762v7.pdf": ["We employ a residual connection [11] around each of the two sub-layers, followed by layer normalization [1]."], "1607.06450v1.pdf": ["we transpose batch normalization into layer normalization by computing the mean and variance used for normalization from all of the summed inputs to the neurons in a layer on a single training case.", "Unlike batch normalization, layer normalization performs exactly the same computation at training and test times.", "It is also straightforward to apply to recurrent neural networks by computing the normalization statistics separately at each time step.", "all the hidden units in a layer share the same normalization terms", "layer normalization does not impose any constraint on the size of a mini-batch", "Layer normalization is very effective at stabilizing the hidden state dynamics in recurrent networks."]}}, {"id": "q04", "task_type": "layout", "source_pdfs": ["2206.07682v2.pdf"], "question": "Figure 2 的横纵轴及图例分别是什么？", "answerable": true, "gold_answer": "Figure 2 的横轴是模型规模（training FLOPs，即训练计算量）；纵轴是任务性能（performance）；图例包括五个语言模型家族 LaMDA、GPT-3、Gopher、Chinchilla、PaLM，以及 Random（随机基线）。", "gold_pages": [2, 3, 4], "gold_anchors": ["When visualized via a scaling curve (x-axis: model scale, y-axis: performance)", "where training compute for each model is measured in FLOPs on the x-axis", "Figure 2 shows eight such emergent abilities spanning five language model families from various work.", "LaMDA", "GPT-3", "Gopher", "Chinchilla", "PaLM", "Random"], "answer_review": null, "evidence_location_review": null, "reviewer": "", "notes": "Figure 2 的横纵轴在正文中明确为 model scale/training FLOPs 与 performance，图例为五个模型家族及 Random 基线。", "model_answer": "", "gold_pages_by_pdf": {}, "gold_anchors_by_pdf": {}}, {"id": "q05", "task_type": "ocr", "source_pdfs": ["1706.03762v1_img.pdf"], "question": "Transformer base 模型训练硬件是什么？", "answerable": true, "gold_answer": "Transformer base 模型训练硬件是一台机器上的 8 块 NVIDIA P100 GPU。", "gold_pages": [7], "gold_anchors": ["We trained our models on one machine with 8 NVIDIA P100 GPUs."], "answer_review": null, "evidence_location_review": null, "reviewer": "", "notes": "第 5.2 节 “Hardware and Schedule” 明确说明训练使用一台机器和 8 块 NVIDIA P100 GPU。", "model_answer": "", "gold_pages_by_pdf": {}, "gold_anchors_by_pdf": {}}],key="sourcelab-human-qa-v1";
+let rows;try{const prev=JSON.parse(localStorage.getItem(key));rows=Array.isArray(prev)&&
+  prev.length===seed.length&&prev.every((x,i)=>x.id===seed[i].id)?prev:seed;
+}catch(e){rows=seed}let i=0;
+const el=id=>document.getElementById(id);
+function save(){try{localStorage.setItem(key,JSON.stringify(rows))}catch(e){console.warn(e)}}
+function parseObject(text, field, tolerant=false){
+  let s=(text||"").trim().replace(/[，]/g,",").replace(/[：]/g,":")
+    .replace(/[“”]/g,'"').replace(/[‘’]/g,"'");
+  if(!s)return {};
+  try{
+    const value=JSON.parse(s);
+    if(!value||Array.isArray(value)||typeof value!=="object")
+      throw Error("必须是对象，例如 {}");
+    return value;
+  }catch(strictError){
+    if(!tolerant)throw Error(field+" 必须是合法 JSON 对象；键和值都要用双引号");
+    // Friendly fallback for the common reviewer shorthand:
+    // {"paper.pdf": [GPU, 8 P100], "other.pdf": [normalization]}
+    const result={}, pair=/"([^"]+)"\s*:\s*\[([^\]]*)\]/g;
+    let match, count=0;
+    while((match=pair.exec(s))){
+      const key=match[1].trim();
+      const values=match[2].split(",").map(x=>x.trim())
+        .filter(Boolean).map(x=>x.replace(/^"|"$/g,"").trim());
+      if(!key||!values.length)continue;
+      result[key]=(result[key]||[]).concat(values);
+      count++;
+    }
+    if(count===0)throw Error(field+" 不是可识别的对象；请使用 {\"文件.pdf\":[\"原文短语\"]}");
+    return result;
+  }
+}
+function render(){const r=rows[i];el("question").textContent=r.id+" · "+r.question;
+el("progress").textContent=`第 ${i+1}/${rows.length} 题；已标 ${rows.filter(x=>typeof x.answerable==="boolean").length}/${rows.length}`;
+const pdfs=r.source_pdfs.map(name=>{
+  const a=document.createElement("a");a.href="../../../pdf/"+encodeURIComponent(name);
+  a.target="_blank";a.rel="noopener";a.textContent=name;
+  return a;});
+el("papers").replaceChildren(...pdfs.flatMap((a,j)=>j?[document.createTextNode("　"),a]:[a]));
+el("answerable").value=r.answerable===null?"":String(r.answerable);
+el("answer").value=r.gold_answer||"";el("pages").value=(r.gold_pages||[]).join(",");
+el("anchors").value=(r.gold_anchors||[]).join("\n");
+el("crosspages").value=JSON.stringify(r.gold_pages_by_pdf||{},null,2);
+el("crossanchors").value=JSON.stringify(r.gold_anchors_by_pdf||{},null,2);
+el("model").value=r.model_answer||"";el("review").value=r.answer_review||"";
+el("location").value=r.evidence_location_review||"";
+el("reviewer").value=r.reviewer||"";el("notes").value=r.notes||"";
+}
+function persist(){const r=rows[i];
+  let cp,ca;try{
+    cp=parseObject(el("crosspages").value,"跨论文金标准页",false);
+    Object.entries(cp).forEach(([name,pages])=>{
+      if(!Array.isArray(pages)||pages.some(x=>!Number.isInteger(Number(x))||Number(x)<1))
+        throw Error("金标准页必须是正整数数组，例如 {\"paper.pdf\":[8]}");
+      cp[name]=pages.map(Number);
+    });
+    ca=parseObject(el("crossanchors").value,"跨论文证据词组",true);
+    Object.entries(ca).forEach(([name,phrases])=>{
+      if(!Array.isArray(phrases)||phrases.some(x=>!String(x).trim()))
+        throw Error("证据词组必须是非空字符串数组");
+      ca[name]=phrases.map(x=>String(x).trim());
+    });
+  }catch(err){alert("导出前请修正：\n"+err.message+
+    "\n\n推荐格式：{\"1706.03762v7.pdf\":[\"GPU\",\"8 P100\"]}");return false}
+  const raw=el("pages").value.trim();
+  const pages=raw?raw.split(",").map(x=>Number(x.trim())):[];
+  if(pages.some(x=>!Number.isInteger(x)||x<1)){alert("PDF 页码必须是正整数");return false}
+  r.answerable=el("answerable").value===""?null:el("answerable").value==="true";
+  r.gold_answer=el("answer").value;r.gold_pages=pages;
+  r.gold_anchors=el("anchors").value.split("\n").map(x=>x.trim()).filter(Boolean);
+  r.gold_pages_by_pdf=cp;r.gold_anchors_by_pdf=ca;
+  r.model_answer=el("model").value;r.answer_review=el("review").value||null;
+  r.evidence_location_review=el("location").value||null;
+  r.reviewer=el("reviewer").value;r.notes=el("notes").value;save();return true;
+}
+function move(d){if(persist()){i=Math.max(0,Math.min(rows.length-1,i+d));render()}}
+function exportData(){if(!persist())return;const url=URL.createObjectURL(new Blob(
+  [JSON.stringify(rows,null,2)],{type:"application/json"}));
+  const a=document.createElement("a");a.href=url;a.download="qa_labels.json";a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),3000)}
+el("import").onchange=async event=>{const file=event.target.files[0];if(!file)return;
+  try{const data=JSON.parse(await file.text());
+    if(!Array.isArray(data)||!data.length||data.some(x=>!x.id||!Array.isArray(x.source_pdfs)))
+      throw Error("问答标注 JSON 格式不符");
+    rows=data;i=0;save();render();
+  }catch(err){alert("导入失败："+err.message)}
+};render();
+</script></html>

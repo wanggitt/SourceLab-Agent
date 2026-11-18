@@ -1,0 +1,181 @@
+[
+  {
+    "id": "l01",
+    "source_pdf": "2206.07682v2.pdf",
+    "page": 4,
+    "full_page_image": "previews\\l01_full_page.png",
+    "candidate_image": "previews\\l01_candidate.png",
+    "candidate_bbox": [
+      0.0,
+      69.9,
+      612.0,
+      511.5
+    ],
+    "candidate_text": "Figure 2: Eight examples of emergence in the few-shot prompting setting. Each point is a separate model. The ability to perform a task via few-shot prompting is emergent when a language model achieves random performance until a certain scale, after which performance signiﬁcantly increases to well-above random. Note that models that used more training compute also typically have more parameters—hence, we show an analogous ﬁgure with number of model parameters instead of training FLOPs as the x-ax",
+    "all_candidates": [
+      {
+        "type": "figure_crop_candidate",
+        "label": "Figure 2",
+        "page_no": 4,
+        "bbox": [
+          0.0,
+          69.9,
+          612.0,
+          511.5
+        ],
+        "source_caption": "Figure 2: Eight examples of emergence in the few-shot prompting setting. Each point is a separate model. The ability to perform a task via few-shot prompting is emergent when a language model achieves random performance until a certain scale, after which performance signiﬁcantly increases to well-above random. Note that models that used more training compute also typically have more parameters—hence, we show an analogous ﬁgure with number of model parameters instead of training FLOPs as the x-ax",
+        "visual_content_detected": true,
+        "crop_confidence": "geometry_candidate"
+      }
+    ],
+    "note": "No unique match means not detected or ambiguous; inspect full page manually."
+  },
+  {
+    "id": "l02",
+    "source_pdf": "1706.03762v7.pdf",
+    "page": 8,
+    "full_page_image": "previews\\l02_full_page.png",
+    "candidate_image": "previews\\l02_candidate.png",
+    "candidate_bbox": [
+      0.0,
+      63.2,
+      612.0,
+      332.1
+    ],
+    "candidate_text": "Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the English-to-German and English-to-French newstest2014 tests at a fraction of the training cost.",
+    "all_candidates": [
+      {
+        "type": "table_crop_candidate",
+        "label": "Table 2",
+        "page_no": 8,
+        "bbox": [
+          0.0,
+          63.2,
+          612.0,
+          332.1
+        ],
+        "source_caption": "Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the English-to-German and English-to-French newstest2014 tests at a fraction of the training cost.",
+        "visual_content_detected": false,
+        "crop_confidence": "unverified_review_crop"
+      }
+    ],
+    "note": "No unique match means not detected or ambiguous; inspect full page manually."
+  },
+  {
+    "id": "l03",
+    "source_pdf": "1706.03762v1_img.pdf",
+    "page": 4,
+    "full_page_image": "previews\\l03_full_page.png",
+    "candidate_image": null,
+    "candidate_bbox": null,
+    "candidate_text": "",
+    "all_candidates": [],
+    "note": "No unique match means not detected or ambiguous; inspect full page manually."
+  },
+  {
+    "id": "l04",
+    "source_pdf": "1707.06347v2.pdf",
+    "page": 4,
+    "full_page_image": "previews\\l04_full_page.png",
+    "candidate_image": "previews\\l04_candidate.png",
+    "candidate_bbox": [
+      0.0,
+      93.6,
+      595.3,
+      304.2
+    ],
+    "candidate_text": "Figure 2: Surrogate objectives, as we interpolate between the initial policy parameter θold, and the updated policy parameter, which we compute after one iteration of PPO. The updated policy has a KL divergence of about 0.02 from the initial policy, and this is the point at which LCLIP is maximal. This plot corresponds to the ﬁrst policy update on the Hopper-v1 problem, using hyperparameters provided in Section 6.1.",
+    "all_candidates": [
+      {
+        "type": "figure_crop_candidate",
+        "label": "Figure 2",
+        "page_no": 4,
+        "bbox": [
+          0.0,
+          93.6,
+          595.3,
+          304.2
+        ],
+        "source_caption": "Figure 2: Surrogate objectives, as we interpolate between the initial policy parameter θold, and the updated policy parameter, which we compute after one iteration of PPO. The updated policy has a KL divergence of about 0.02 from the initial policy, and this is the point at which LCLIP is maximal. This plot corresponds to the ﬁrst policy update on the Hopper-v1 problem, using hyperparameters provided in Section 6.1.",
+        "visual_content_detected": true,
+        "crop_confidence": "geometry_candidate"
+      }
+    ],
+    "note": "No unique match means not detected or ambiguous; inspect full page manually."
+  },
+  {
+    "id": "l05",
+    "source_pdf": "1707.06347v2.pdf",
+    "page": 8,
+    "full_page_image": "previews\\l05_full_page.png",
+    "candidate_image": "previews\\l05_candidate.png",
+    "candidate_bbox": [
+      0.0,
+      441.6,
+      595.3,
+      506.2
+    ],
+    "candidate_text": "Table 2: Number of games “won” by each algorithm, where the scoring metric is averaged across three trials.",
+    "all_candidates": [
+      {
+        "type": "figure_crop_candidate",
+        "label": "Figure 5",
+        "page_no": 8,
+        "bbox": [
+          0.0,
+          93.7,
+          595.3,
+          255.7
+        ],
+        "source_caption": "Figure 5: Still frames of the policy learned from RoboschoolHumanoidFlagrun. In the ﬁrst six frames, the robot runs towards a target. Then the position is randomly changed, and the robot turns and runs toward the new target.",
+        "visual_content_detected": true,
+        "crop_confidence": "geometry_candidate"
+      },
+      {
+        "type": "table_crop_candidate",
+        "label": "Table 2",
+        "page_no": 8,
+        "bbox": [
+          0.0,
+          441.6,
+          595.3,
+          506.2
+        ],
+        "source_caption": "Table 2: Number of games “won” by each algorithm, where the scoring metric is averaged across three trials.",
+        "visual_content_detected": false,
+        "crop_confidence": "unverified_review_crop"
+      }
+    ],
+    "note": "No unique match means not detected or ambiguous; inspect full page manually."
+  },
+  {
+    "id": "l06",
+    "source_pdf": "1706.03762v7.pdf",
+    "page": 5,
+    "full_page_image": "previews\\l06_full_page.png",
+    "candidate_image": null,
+    "candidate_bbox": [
+      226.9,
+      568.1,
+      504.7,
+      579.6
+    ],
+    "candidate_text": "FFN(x) = max(0, xW1 + b1)W2 + b2 (2)",
+    "all_candidates": [
+      {
+        "type": "equation_candidate",
+        "label": "公式编号候选",
+        "page_no": 5,
+        "excerpt": "FFN(x) = max(0, xW1 + b1)W2 + b2 (2)",
+        "bbox": [
+          226.9,
+          568.1,
+          504.7,
+          579.6
+        ],
+        "confidence": "heuristic_label_only"
+      }
+    ],
+    "note": "No unique match means not detected or ambiguous; inspect full page manually."
+  }
+]

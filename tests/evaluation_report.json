@@ -1,0 +1,139 @@
+{
+  "source_file": "1706.03762v7.pdf",
+  "metric": "top-3 evidence page hit; NOT answer correctness",
+  "cases": [
+    {
+      "question": "第六位作者属于哪个机构",
+      "expected_pages": [
+        1
+      ],
+      "top_3_pages": [
+        1,
+        1,
+        1
+      ],
+      "top_3_page_hit": true,
+      "sparse_top_3_pages": [
+        1,
+        1,
+        1
+      ],
+      "sparse_top_3_page_hit": true,
+      "latent_top_3_pages": [
+        1,
+        1,
+        1
+      ],
+      "latent_top_3_page_hit": true
+    },
+    {
+      "question": "Adam 优化器 beta1 beta2 参数",
+      "expected_pages": [
+        7
+      ],
+      "top_3_pages": [
+        7,
+        1,
+        5
+      ],
+      "top_3_page_hit": true,
+      "sparse_top_3_pages": [
+        7,
+        1,
+        11
+      ],
+      "sparse_top_3_page_hit": true,
+      "latent_top_3_pages": [
+        7,
+        5,
+        1
+      ],
+      "latent_top_3_page_hit": true
+    },
+    {
+      "question": "Transformer base model GPU 型号 数量",
+      "expected_pages": [
+        7
+      ],
+      "top_3_pages": [
+        8,
+        7,
+        2
+      ],
+      "top_3_page_hit": true,
+      "sparse_top_3_pages": [
+        7,
+        8,
+        2
+      ],
+      "sparse_top_3_page_hit": true,
+      "latent_top_3_pages": [
+        8,
+        2,
+        8
+      ],
+      "latent_top_3_page_hit": false
+    },
+    {
+      "question": "Transformer big BLEU English German",
+      "expected_pages": [
+        8
+      ],
+      "top_3_pages": [
+        8,
+        8,
+        1
+      ],
+      "top_3_page_hit": true,
+      "sparse_top_3_pages": [
+        8,
+        8,
+        1
+      ],
+      "sparse_top_3_page_hit": true,
+      "latent_top_3_pages": [
+        8,
+        8,
+        8
+      ],
+      "latent_top_3_page_hit": true
+    },
+    {
+      "question": "Layer normalization references",
+      "expected_pages": [
+        10
+      ],
+      "top_3_pages": [
+        10,
+        10,
+        3
+      ],
+      "top_3_page_hit": true,
+      "sparse_top_3_pages": [
+        10,
+        10,
+        3
+      ],
+      "sparse_top_3_page_hit": true,
+      "latent_top_3_pages": [
+        10,
+        3,
+        3
+      ],
+      "latent_top_3_page_hit": true
+    }
+  ],
+  "top_3_page_hit_count": 5,
+  "sparse_top_3_page_hit_count": 5,
+  "latent_top_3_page_hit_count": 4,
+  "query_seconds_by_method": {
+    "sparse": 0.026,
+    "latent": 1.466,
+    "hybrid": 0.329
+  },
+  "total": 5,
+  "controls": {
+    "nonsense_query_returns_no_evidence": true
+  },
+  "limitations": "五条手工指定问题与页码的小样本；PDF 同一事实可能出现在多个页。没有对答案真假、跨文推理、引用精确位置、OCR 质量或错误拒答率作出评估。"
+}

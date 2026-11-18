@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SourceLab · 科研助手最小闭环</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div><strong class="brand">SourceLab</strong><span class="badge">本地 MVP</span></div>
+    <p>从论文导入到可核对的证据与写作草稿</p>
+    <span id="health" class="health">正在连接…</span>
+  </header>
+  <nav class="view-controls" aria-label="页面布局与字号">
+    <button id="toggle-library" type="button" aria-controls="library-panel" aria-expanded="true">收起文献库</button>
+    <button id="toggle-assistant" type="button" aria-controls="assistant-panel" aria-expanded="true">收起 Agent 栏</button>
+    <button id="focus-assistant" type="button" aria-pressed="false">Agent 专注模式</button>
+    <span class="control-spacer"></span>
+    <span class="view-label">页面文字</span>
+    <button id="font-smaller" type="button" aria-label="缩小页面文字">A−</button>
+    <output id="font-level" aria-live="polite">100%</output>
+    <button id="font-larger" type="button" aria-label="放大页面文字">A+</button>
+    <button id="layout-reset" type="button">恢复默认布局</button>
+  </nav>
+  <main id="page-layout">
+    <aside id="library-panel" class="library card">
+      <div class="section-head"><div><span class="eyebrow">01 / LIBRARY</span><h2>文献库</h2></div><span id="count" class="count">0 篇</span></div>
+      <label class="upload">
+        <input id="upload" type="file" accept="application/pdf,.pdf" multiple>
+        <span>＋ 上传 PDF（支持多选）</span>
+      </label>
+      <div class="sample-form">
+        <label for="sample">或导入当前目录的官方样例</label>
+        <select id="sample"><option value="">选择论文…</option></select>
+        <button id="sample-btn" class="btn light">导入样例</button>
+      </div>
+      <form id="arxiv-form" class="sample-form">
+        <label for="arxiv-title">arXiv 公开 API · 按论文题名检索</label>
+        <input id="arxiv-title" maxlength="160" placeholder="例如 Attention Is All You Need" required>
+        <button type="submit" class="btn light">检索候选</button>
+      </form>
+      <div id="arxiv-candidates" class="arxiv-candidates"></div>
+      <details class="compare-panel">
+        <summary>探索近期论文 · 手动刷新</summary>
+        <form id="recent-form" class="sample-form">
+          <input id="recent-topic" maxlength="160" placeholder="主题，如 machine translation" required>
+          <button type="submit" class="btn light">查询近期论文</button>
+        </form>
+        <p class="hint">结果留存本机。每篇可按需核对 DBLP / Crossref 的题名严格匹配与出版来源，并打开 Google Scholar 手动检查；DBLP 若出现反机器人拦截则不会绕过。Google Scholar 不自动爬取、模型不负责猜测期刊。年度期刊影响因子需要许可及年份明确的 JCR 来源，缺失时显示未核验，会议不适用。没找到仓库链接≠未开源。</p>
+        <div id="recent-results" class="arxiv-candidates"></div>
+      </details>
+      <details class="compare-panel">
+        <summary>定期主题追踪 · 仅保存元数据</summary>
+        <form id="tracking-form" class="sample-form">
+          <label for="tracking-topic">订阅主题（本机最多 5 个）</label>
+          <input id="tracking-topic" maxlength="120" placeholder="例如 machine translation" required>
+          <select id="tracking-interval" aria-label="自动刷新间隔">
+            <option value="1440">每 24 小时</option>
+            <option value="360">每 6 小时</option>
+            <option value="10080">每 7 天</option>
+          </select>
+          <button type="submit" class="btn light">创建主题订阅</button>
+        </form>
+        <button id="tracking-reload" class="btn light" type="button">查看最新运行状态</button>
+        <div id="tracking-list"></div>
+      </details>
+      <p class="hint">候选先确认再下载；仅允许 arXiv 数字型 ID。导入为后台任务；扫描件进行本地 OCR。</p>
+      <div id="papers" class="paper-list"><p class="empty">暂无论文。先上传一篇，或导入官方样例。</p></div>
+      <section id="version-panel" class="versions" hidden>
+        <div class="section-head"><div><span class="eyebrow">VERSION CONTROL</span><h2>版本对比</h2></div></div>
+        <p class="hint" id="version-description"></p>
+        <button id="version-compare" class="btn light" type="button">查看候选差异</button>
+        <div id="version-results"></div>
+      </section>
+    </aside>
+
+    <div id="library-resizer" class="panel-resizer" role="separator" tabindex="0" aria-label="拖动调整文献库宽度；方向键微调" aria-orientation="vertical" aria-controls="library-panel" aria-valuemin="260" aria-valuemax="640" aria-valuenow="310"></div>
+    <section class="workspace">
+      <section class="reader card">
+        <div class="section-head">
+          <div><span class="eyebrow">02 / READ</span><h2 id="reader-title">选择一篇论文阅读</h2></div>
+          <div class="reader-actions"><span id="reader-page">—</span><a id="open-pdf" target="_blank" rel="noopener">在新标签页打开 ↗</a></div>
+        </div>
+        <details id="bilingual-panel" class="bilingual-panel" hidden>
+          <summary>原译对照阅读 · 模型配置后可生成</summary>
+          <p class="hint">先选页并点击“估算并开始”，翻译任务完成后点“对照阅读”。支持对照文本栏划词翻译、悬停查看已生成的对应译文、同页双栏同步滚动，以及完成后导出 Markdown/HTML。原始 PDF iframe 内直接划词与悬停、原位排版 PDF 翻译尚未实现；跨页须用翻页按钮。不保证复杂双栏阅读顺序，开始前需确认预计请求次数和可能费用。若返回 401，请先更换有效模型密钥。</p>
+          <div class="bilingual-controls">
+            <label>起始页<input id="bilingual-first" type="number" min="1" value="1"></label>
+            <label>结束页<input id="bilingual-last" type="number" min="1" value="1"></label>
+            <label>目标语言
+              <select id="bilingual-target">
+                <option value="zh-CN">中文</option><option value="en">英文</option>
+              </select>
+            </label>
+            <button id="bilingual-create" class="btn light" type="button">估算并开始</button>
+            <button id="bilingual-refresh" class="btn light" type="button">查看任务进度</button>
+          </div>
+          <div id="bilingual-jobs"></div>
+          <div id="bilingual-reading" hidden>
+            <div class="bilingual-controls">
+              <button id="bilingual-prev" class="btn light" type="button">← 上一页</button>
+              <span id="bilingual-page-label"></span>
+              <button id="bilingual-next" class="btn light" type="button">下一页 →</button>
+              <button id="bilingual-close" class="btn light" type="button">返回 PDF</button>
+              <button id="bilingual-selection-translate" class="btn light" type="button">翻译原文栏选中文字</button>
+            </div>
+            <p id="bilingual-selection-result" class="hint"></p>
+            <p class="hint">拖动任意一栏，会按相同文本块锚点同步另一栏；仅对已翻译完成的块生效。</p>
+            <div class="bilingual-panes">
+              <div id="bilingual-source" class="bilingual-pane"></div>
+              <div id="bilingual-target-pane" class="bilingual-pane"></div>
+            </div>
+          </div>
+        </details>
+        <div id="reader-navigation" class="reader-navigation" hidden>
+          <details id="reader-profile-panel" open><summary>论文信息</summary><div id="profile"></div></details>
+          <details open><summary>章节目录 · 按页定位</summary><div id="headings"></div></details>
+          <details>
+            <summary>本页结构候选</summary>
+            <div class="layout-page-controls">
+              <label for="inspect-page">指定 PDF 物理页</label>
+              <input id="inspect-page" type="number" min="1" value="1" inputmode="numeric">
+              <button id="inspect-prev" class="btn light" type="button" aria-label="上一页结构">上一页</button>
+              <button id="inspect-next" class="btn light" type="button" aria-label="下一页结构">下一页</button>
+            </div>
+            <p class="hint">内嵌 PDF 自带的翻页不会同步到这里；输入页码或用上下页明确指定。页码从 PDF 第 1 页起，不是纸面印刷页码。</p>
+            <button id="inspect-layout" class="btn light" type="button">检查当前页</button>
+            <button id="inspect-layout-preview" class="btn light" type="button">显示结构标注图</button>
+            <div id="layout-results"><p class="hint">打开论文后按需解析页面。</p></div>
+            <img id="layout-preview-image" class="layout-preview-image" alt="当前 PDF 页图表、表格和公式候选标注图" hidden>
+          </details>
+        </div>
+        <p id="reader-size-hint" class="hint reader-size-hint">可拖动右下角调整上方论文信息、章节导航等区域的宽高；PDF 阅读区仍在下方。</p>
+        <div id="reader-empty" class="reader-empty">
+          <span class="symbol">⌕</span>
+          <h3>论文、证据与阅读保持在同一处</h3>
+          <p>点击左侧论文，或点击右侧问答证据跳转到 PDF 页。</p>
+        </div>
+        <iframe id="pdf-view" title="论文 PDF 阅读器" hidden></iframe>
+        <div id="source-preview" class="source-preview" hidden>
+          <div class="source-preview-actions">
+            <span id="preview-status">原文位置预览</span>
+            <button id="close-preview" class="btn light" type="button">返回 PDF 阅读器</button>
+          </div>
+          <img id="preview-image" alt="含证据区域标记的 PDF 页面；若无法定位则仅显示页面">
+        </div>
+      </section>
+
+      <details id="reference-drilldown-panel" class="card structure-view" hidden>
+        <summary>参考文献下钻 · 原文候选 → 核对 arXiv → 确认下载到文献库</summary>
+        <p class="hint">属于所选论文。带明确 arXiv ID 的引用需核对官方元数据并手动确认后入库；作者—年份引用没有 [n] 时使用候选序号，不能当作 PDF 原始引用编号。</p>
+        <button id="refresh-references" class="btn light" type="button">刷新当前论文引用候选</button>
+        <div id="reference-candidates"></div>
+      </details>
+      <details id="structure-panel" class="card structure-view" hidden>
+        <summary>文档结构总览 · 图表截图/公式/参考文献区域/附录</summary>
+        <button id="load-structure" class="btn light" type="button">提取当前论文结构</button>
+        <button id="explain-all-equations" class="btn light" type="button" hidden>解释全部编号公式（需模型）</button>
+        <p class="hint">按顺序给公式标 E1/E2…，核查输入、变换、输出及“为什么”，不把某条公式错配给另一页。默认不发模型；点击并确认费用后，每组最多 4 条、最多 5 次请求。失败即停止，保留已核验结果及已耗 Token；最多覆盖 20 条已识别候选。</p>
+        <details class="structure-group">
+          <summary>公式解释如何审查？</summary>
+          <p class="hint">按每组最多 4 条公式及同页邻近原文发给已配置模型，未缓存组可能计费；模型截断、空答或检验失败会立即停下。通过验证的组按论文、原文快照和模型缓存，重试时只请求失败/未完成组。模型引文无法定位时使用原始公式作为页码定位锚点；出现本式来源不支持的数字时仅隐藏相应字段并提示，<strong>不能将这一修复误认为科学结论通过验证</strong>。跨组因果关系未自动核验。</p>
+        </details>
+        <div id="equations-all-results" aria-live="polite"></div>
+        <div id="structure-results"><p class="hint">选择已解析论文后自动提取本地结构、引用候选和 Future Work；点击候选可定位原 PDF 页。翻译、公式解释、下载和删除等可能计费或有破坏性的操作仍需明确点击确认。</p></div>
+      </details>
+
+      <section class="lower">
+        <div class="card panel">
+          <div class="section-head"><div><span class="eyebrow">04 / GRAPH</span><h2>局域引用关系</h2></div><button id="graph-btn" class="btn light">刷新</button></div>
+          <p class="hint">仅从 References 区建立可查证的引用边；排名只代表当前文献库。</p>
+          <div class="graph-controls">
+            <input id="graph-search" type="search" placeholder="搜索节点题名或 arXiv ID" aria-label="搜索图谱论文">
+            <select id="graph-edge-filter" aria-label="筛选图谱引用边">
+              <option value="all">所有引用边</option>
+              <option value="arxiv_id">仅 arXiv ID 证据</option>
+              <option value="title">仅完整题名证据</option>
+            </select>
+            <button id="graph-clear" class="btn light" type="button">清除选择</button>
+          </div>
+          <p id="graph-selection" class="hint">点击节点后仅高亮其直接引用与被引用的邻居。</p>
+          <div id="graph" class="graph"><p class="empty">导入两篇及以上论文后可查看。</p></div>
+          <button id="graph-expand" class="btn light" type="button" disabled>放大关系图</button>
+          <button id="graph-review" class="btn light" type="button">列出局域引文事实（非文献综述）</button>
+          <div id="graph-review-results"></div>
+          <details class="compare-panel">
+            <summary>局域证据综述与 Future Work 时间线（不自动判定已解决）</summary>
+            <p class="hint">与下方「Future Work 证据线索」共用同一原文提取器：下方仅显示当前选中论文，本处汇总整库多篇候选（最多展示 18 条），额外排列初投月份及引用事实。不是两套相互独立的已核验结论。未联网检索完整领域成果，也没有复现实验；不会自动判定“已解决”或保证新颖性。</p>
+            <button id="frontier-refresh" class="btn light" type="button">整理当前文献库线索</button>
+            <button id="frontier-model" class="btn light" type="button" disabled>AI 草拟带引文的局域短综述（确认计费）</button>
+            <div id="frontier-model-results"></div>
+            <div id="frontier-results"></div>
+          </details>
+        </div>
+        <div class="card panel">
+          <div class="section-head"><div><span class="eyebrow">05 / DATA</span><h2>CSV → 学术图表</h2></div></div>
+          <p class="hint">支持三类 CSV：① 实验指标（类别+至少一列数值）；② ImageID 后跟 Vesicle/Papule 等 0/1 标签：按标签统计图像数量、可排除“Do not consider this image”；③ ID/哈希+标签类别列：按类别全量频数统计。多标签图像会在多个类别重复计数，**不是模型准确率**。≤256 MB/200 万行。图表在此处缩略显示，点“放大查看”可阅读横纵轴。</p>
+          <div class="data-tools">
+            <label class="mini-upload">上传 CSV<input id="csv" type="file" accept=".csv,text/csv"></label>
+            <label id="csv-group-control" class="csv-category-control" hidden>类别统计列 <select id="csv-group" aria-label="选择分组统计的类别列"></select></label>
+            <select id="chart-type" aria-label="图表类型"><option value="bar">分组柱状图</option><option value="line">多系列折线图</option><option value="radar">归一化二维雷达图</option><option value="radar3d">三维分层雷达（等轴投影）</option></select>
+            <button id="chart-open" class="btn light" type="button" disabled>放大查看图表</button>
+            <button id="export-chart" class="btn light" type="button" disabled>导出 SVG</button>
+          </div>
+          <div id="chart" class="chart"><p class="empty">实验指标 CSV：类别 + 数值列；图像/标签元数据 CSV：按类别列统计样本频数，不会将标签误当准确率。</p></div>
+          <p class="hint">抽样图不代表全量分布；如需精确论文结果表，请上传已聚合的 CSV 而不是将大规模数据集直接可视化为 20 行。</p>
+          <p id="caption" class="caption"></p>
+          <div id="data-table" class="data-table"></div>
+        </div>
+        <div class="card panel horizon-panel">
+          <div class="section-head">
+            <div><span class="eyebrow">06 / HORIZON</span><h2>Future Work 证据线索</h2></div>
+            <button id="future-btn" class="btn light" type="button">分析当前论文</button>
+          </div>
+          <p class="hint">选择已解析论文后自动分析当前论文的 Future Work 原文和本地候选；左侧「局域证据综述与 Future Work 时间线」汇总多篇论文，同用原文提取规则。每条可自愿翻译为中文，保留英文原文。不判断方向新颖或已经解决。</p>
+          <div id="future-results"><p class="empty">选择已解析的论文后开始分析。</p></div>
+        </div>
+      </section>
+    </section>
+
+    <div id="assistant-resizer" class="panel-resizer" role="separator" tabindex="0" aria-label="拖动调整 Agent 栏宽度；方向键微调" aria-orientation="vertical" aria-controls="assistant-panel" aria-valuemin="320" aria-valuemax="850" aria-valuenow="370"></div>
+    <aside id="assistant-panel" class="assistant">
+      <div class="card qa">
+        <div class="section-head"><div><span class="eyebrow">03 / EVIDENCE</span><h2>依据原文提问</h2></div><span class="dot"></span></div>
+        <p class="hint">没有有效模型响应时仍可检索 PDF 原文；不会凭空给出科研结论。</p>
+        <p id="ask-mode" class="capability-note" role="status">正在检查问答能力…</p>
+        <label class="field-label" for="scope">检索范围</label>
+        <select id="scope"><option value="">全部已解析文献</option></select>
+        <form id="ask-form">
+          <textarea id="question" placeholder="例如：Transformer base 模型使用了多少个 GPU？具体型号是什么？" rows="3" required></textarea>
+          <button id="ask-submit" class="btn primary" type="submit">检索证据 →</button>
+        </form>
+        <div id="answer"><p class="empty">回答将在这里显示，并附原文证据。</p></div>
+        <details id="audit-panel" class="compare-panel">
+          <summary>Agent 审计记录（默认收起；点击展开）</summary>
+          <p class="hint">默认仅显示最近 5 条，点击单条问题查看执行步骤。历史太多时可点“查看全部”或放大阅读。</p>
+          <button id="audit-expand" class="btn light" type="button" aria-expanded="false">放大审计记录</button>
+          <button id="audit-refresh" class="btn light" type="button">刷新审计</button>
+          <button id="audit-more" class="btn light" type="button" hidden>查看全部 20 条</button>
+          <div id="audit-list"><p class="hint">尚无记录。</p></div>
+        </details>
+        <details id="compare-panel" class="compare-panel">
+          <summary>多篇论文证据对照（2–4 篇）</summary>
+          <p class="hint">选择论文，沿用上方问题；逐篇展示原文片段，不自动编造跨文结论。</p>
+          <div id="compare-choices"></div>
+          <button id="compare-btn" class="btn light" type="button">逐篇检索证据</button>
+          <div id="compare-results"></div>
+        </details>
+        <details class="compare-panel">
+          <summary>复合任务 · 工具执行 + 可选带引文 AI 回答</summary>
+          <p class="hint">例如“比较两篇论文的方法并提取未来工作”。勾选模型后先请求白名单工具规划，再将工具找到的原文片段发送模型尝试生成逐句 [n] 引用的答案；任一步失败退回来源，不会自动下载或删除。可能发生两次模型计费。</p>
+          <textarea id="task-instruction" rows="2" placeholder="比较两篇论文的方法并查看未来工作"></textarea>
+          <div id="task-choices"></div>
+          <label class="compare-choice">
+            <input id="task-use-model" type="checkbox">
+            <span>请求模型规划并根据原文回答（最多两次可能计费的模型请求；失败回退证据）</span>
+          </label>
+          <button id="task-run" class="btn light" type="button">运行复合任务</button>
+          <div id="task-results"></div>
+        </details>
+      </div>
+      <div class="card writing">
+        <div class="section-head"><div><span class="eyebrow">06 / WRITE</span><h2>论文框架草稿</h2></div></div>
+        <p class="hint">默认仅生成本地证据辅助模板和待验证的 Method/Experiments 计划；不会凭 Idea 自动产生实验结果。勾选论文并明确选择模型后，才会额外请求 DeepSeek 写有 [n] 引文的 Introduction/Related Work 背景草稿；检验通过仍不是论文成稿。可另外确认费用生成 AI 拟议方法拓扑。</p>
+        <p class="hint">建议输入：研究任务与目标领域、要改造的原论文方法/模块、目标数据集与划分、基线、指标、资源及验证假设。例如“把所选论文的决策级融合用于遥感地物识别；对比源方法和简单融合；数据集、划分、指标待选择”。只写“换一个数据集”不足以推断具体实验，系统会标待选择。</p>
+        <p id="writing-mode" class="capability-note" role="status">离线规则框架 · 无模型生成</p>
+        <form id="outline-form">
+          <textarea id="idea" placeholder="必填：任务与目标（5–300 字），例如：将所选论文的决策融合方法迁移至遥感地物识别，比较直接应用与简单融合基线" rows="3" required></textarea>
+          <textarea id="plan-details" placeholder="可选：目标数据集与许可、训练/测试划分、对比方法、评价指标、消融、计算资源、风险。没有的留空，AI 必须写待选/待核验；最多 500 字。" rows="3" maxlength="500"></textarea>
+          <div id="writing-choices"></div>
+          <label class="compare-choice"><input id="writing-use-model" type="checkbox" disabled>
+            <span>可选：请求模型生成带 [n] 引文的草稿（将原文片段发送至所配模型；需人工核对）</span>
+          </label>
+          <button id="outline-submit" class="btn light" type="submit">生成有出处的框架候选</button>
+          <button id="writing-plan-ai" class="btn light" type="button" disabled>AI 设计任务/假设/数据与实验（确认计费）</button>
+          <button id="verify-writing-refs" class="btn light" type="button">核对所选论文官方作者/年份</button>
+        </form>
+        <div id="writing-plan-results" role="status"></div>
+        <div id="outline"></div>
+        <div id="writing-verification"></div>
+        <details class="compare-panel">
+          <summary>可复制架构拓扑图</summary>
+          <p class="hint">默认仅生成固定科研流程模板。选中论文并输入 Idea 后，可另行确认费用，请模型将原文证据节点与待验证的设计节点分开，生成可复制 Mermaid；短引文核查通过也不证明架构正确。</p>
+          <button id="diagram-btn" class="btn light" type="button">生成离线流程模板</button>
+          <button id="diagram-ai-btn" class="btn light" type="button" disabled>AI 草拟方法拓扑（确认计费）</button>
+          <div id="diagram-ai-status" role="status"></div>
+          <div id="diagram-preview"></div>
+          <button id="diagram-expand" class="btn light" type="button" disabled>放大拓扑图</button>
+          <button id="diagram-download" class="btn light" type="button" disabled>下载 SVG</button>
+          <pre id="diagram-code" class="diagram-code"></pre>
+        </details>
+      </div>
+    </aside>
+  </main>
+  <section id="audit-window" class="audit-window" role="dialog" aria-modal="true" aria-label="Agent 审计记录放大视图" hidden>
+    <div class="audit-window-head"><h2>Agent 审计记录</h2><div>
+      <button id="audit-large-refresh" class="btn light" type="button">刷新</button>
+      <button id="audit-close" class="btn light" type="button">关闭（Esc）</button>
+    </div></div>
+    <div id="audit-large-list" class="audit-large-list"></div>
+  </section>
+  <section id="chart-window" class="chart-window" role="dialog" aria-modal="true" aria-label="图表放大预览" hidden>
+    <div class="chart-window-head"><h2>学术图表 · 放大预览</h2>
+      <button id="chart-close" class="btn light" type="button">关闭（Esc）</button>
+    </div>
+    <div id="chart-window-preview"></div>
+    <p id="chart-window-caption" class="caption"></p>
+  </section>
+  <section id="visual-window" class="chart-window" role="dialog" aria-modal="true" aria-label="图谱或拓扑图放大预览" hidden>
+    <div class="chart-window-head"><h2 id="visual-title">图形放大阅读</h2><div>
+      <button id="visual-smaller" class="btn light" type="button">−</button>
+      <output id="visual-scale" aria-live="polite">100%</output>
+      <button id="visual-larger" class="btn light" type="button">+</button>
+      <button id="visual-reset" class="btn light" type="button">重置</button>
+      <button id="visual-download" class="btn light" type="button">下载 SVG</button>
+      <button id="visual-close" class="btn light" type="button">关闭（Esc）</button>
+    </div></div>
+    <div id="visual-preview" class="visual-preview"></div>
+    <p id="visual-caption" class="hint"></p>
+  </section>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

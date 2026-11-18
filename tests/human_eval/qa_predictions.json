@@ -1,0 +1,134 @@
+[
+  {
+    "id": "q01",
+    "by_paper": [
+      {
+        "source_pdf": "1706.03762v7.pdf",
+        "top3": [
+          {
+            "page": 8,
+            "chunk_id": 131,
+            "excerpt": "Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the\nEnglish-to-German and English-to-French newstest2014 tests at a fraction of the training cost.\nModel\nBLEU Training Cost (FLOPs)\nEN-DE EN-FR EN-DE EN-FR\nByteNet [18] 23.75\nDeep-Att + PosUnk [39] 39.2 1.0 · 1020\nGNMT + RL [38] 24.6 39.92 2.3 · 1019 1.4 · 1020\nConvS2S [9] 25.16 40.46 9.6 · 1018 1.5 · 1020\nMoE [32] 26.03 40.56 2.0 · 1019 1.2 · 1020\nDeep-Att + PosUnk Ensemble [39] 40.4 8.0 · 1020\nGNMT + RL Ensemble [38] 26.30 41.16 1.8 · 1020 1.1 · 1021\nConvS2S Ensemble [9] 26.36 41.29 7.7 · 1019 1.2 · 1021\nTransformer (base model) 27.3 38.1 3.3 · 1018\nTransformer (big) 28.4 41.8 2.3 · 1019\nResidual Dropout We apply dropout [33] to the output of each sub-layer, before it is added to the\nsub-layer input and normalized. In addition, we apply dropout to the sums of the embeddings and the\npositional encodings in both the encoder and decoder stacks. For the base model, we use a rate of\nPdrop = 0.1.\nLabel Smoothing During training, we employed label smoothing of value ϵls = 0.1 [36]. This\nhurts perplexity, as the model learns to be more unsure, but improves accuracy "
+          },
+          {
+            "page": 8,
+            "chunk_id": 132,
+            "excerpt": "d to the\nsub-layer input and normalized. In addition, we apply dropout to the sums of the embeddings and the\npositional encodings in both the encoder and decoder stacks. For the base model, we use a rate of\nPdrop = 0.1.\nLabel Smoothing During training, we employed label smoothing of value ϵls = 0.1 [36]. This\nhurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score.\n6 Results\n6.1 Machine Translation\nOn the WMT 2014 English-to-German translation task, the big transformer model (Transformer (big)\nin Table 2) outperforms the best previously reported models (including ensembles) by more than 2.0\nBLEU, establishing a new state-of-the-art BLEU score of 28.4. The configuration of this model is\nlisted in the bottom line of Table 3. Training took 3.5 days on 8 P100 GPUs. Even our base model\nsurpasses all previously published models and ensembles, at a fraction of the training cost of any of\nthe competitive models.\nOn the WMT 2014 English-to-French translation task, our big model achieves a BLEU score of 41.0,\noutperforming all of the previously published single models, at less than 1/4 the training cost of the\nprevious state-of-the-art model. The Transformer (big) model trained for English-to-French use"
+          },
+          {
+            "page": 8,
+            "chunk_id": 134,
+            "excerpt": "nate early when possible [38].\nTable 2 summarizes our results and compares our translation quality and training costs to other model\narchitectures from the literature. We estimate the number of floating point operations used to train a\nmodel by multiplying the training time, the number of GPUs used, and an estimate of the sustained\nsingle-precision floating-point capacity of each GPU 5.\n6.2 Model Variations\nTo evaluate the importance of different components of the Transformer, we varied our base model\nin different ways, measuring the change in performance on English-to-German translation on the\n5We used values of 2.8, 3.7, 6.0 and 9.5 TFLOPS for K80, K40, M40 and P100, respectively.\n8"
+          }
+        ]
+      }
+    ],
+    "any_evidence": true,
+    "gold_anchor_hit": false,
+    "gold_page_hit": true
+  },
+  {
+    "id": "q03",
+    "by_paper": [
+      {
+        "source_pdf": "1706.03762v7.pdf",
+        "top3": [
+          {
+            "page": 3,
+            "chunk_id": 114,
+            "excerpt": "Figure 1: The Transformer - model architecture.\nThe Transformer follows this overall architecture using stacked self-attention and point-wise, fully\nconnected layers for both the encoder and decoder, shown in the left and right halves of Figure 1,\nrespectively.\n3.1 Encoder and Decoder Stacks\nEncoder: The encoder is composed of a stack of N = 6 identical layers. Each layer has two\nsub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, position-\nwise fully connected feed-forward network. We employ a residual connection [11] around each of\nthe two sub-layers, followed by layer normalization [ 1]. That is, the output of each sub-layer is\nLayerNorm(x + Sublayer(x)), where Sublayer(x) is the function implemented by the sub-layer\nitself. To facilitate these residual connections, all sub-layers in the model, as well as the embedding\nlayers, produce outputs of dimension dmodel = 512.\nDecoder: The decoder is also composed of a stack of N = 6identical layers. In addition to the two\nsub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head\nattention over the output of the encoder stack. "
+          },
+          {
+            "page": 3,
+            "chunk_id": 115,
+            "excerpt": " facilitate these residual connections, all sub-layers in the model, as well as the embedding\nlayers, produce outputs of dimension dmodel = 512.\nDecoder: The decoder is also composed of a stack of N = 6identical layers. In addition to the two\nsub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head\nattention over the output of the encoder stack. Similar to the encoder, we employ residual connections\naround each of the sub-layers, followed by layer normalization. We also modify the self-attention\nsub-layer in the decoder stack to prevent positions from attending to subsequent positions. This\nmasking, combined with fact that the output embeddings are offset by one position, ensures that the\npredictions for position i can depend only on the known outputs at positions less than i.\n3.2 Attention\nAn attention function can be described as mapping a query and a set of key-value pairs to an output,\nwhere the query, keys, values, and output are all vectors. The output is computed as a weighted sum\n3"
+          },
+          {
+            "page": 10,
+            "chunk_id": 142,
+            "excerpt": "rrections and inspiration.\nReferences\n[1] Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv preprint\narXiv:1607.06450, 2016.\n[2] Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly\nlearning to align and translate. CoRR, abs/1409.0473, 2014.\n[3] Denny Britz, Anna Goldie, Minh-Thang Luong, and Quoc V . Le. Massive exploration of neural\nmachine translation architectures. CoRR, abs/1703.03906, 2017.\n[4] Jianpeng Cheng, Li Dong, and Mirella Lapata. Long short-term memory-networks for machine\nreading. arXiv preprint arXiv:1601.06733, 2016.\n10"
+          }
+        ]
+      },
+      {
+        "source_pdf": "1607.06450v1.pdf",
+        "top3": [
+          {
+            "page": 1,
+            "chunk_id": 2,
+            "excerpt": "ependent\non the mini-batch size and it is not obvious how to apply it to recurrent neural net-\nworks. In this paper, we transpose batch normalization into layer normalization by\ncomputing the mean and variance used for normalization from all of the summed\ninputs to the neurons in a layer on asingle training case. Like batch normalization,\nwe also give each neuron its own adaptive bias and gain which are applied after\nthe normalization but before the non-linearity. Unlike batch normalization, layer\nnormalization performs exactly the same computation at training and test times.\nIt is also straightforward to apply to recurrent neural networks by computing the\nnormalization statistics separately at each time step. Layer normalization is very\neffective at stabilizing the hidden state dynamics in recurrent networks. Empiri-\ncally, we show that layer normalization can substantially reduce the training time\ncompared with previously published techniques.\n1 Introduction\nDeep neural networks trained with some version of Stochastic Gradient Descent have been shown\nto substantially outperform previous approaches on various supervised learning tasks in computer\nvision [Krizhevsky et al., 2012] and speech processing [Hinton et al., 2012]. But st"
+          },
+          {
+            "page": 2,
+            "chunk_id": 9,
+            "excerpt": ". Instead, µ andσ are estimated using the empirical samples from the current\nmini-batch. This puts constraints on the size of a mini-batch and it is hard to apply to recurrent\nneural networks.\n3 Layer normalization\nWe now consider the layer normalization method which is designed to overcome the drawbacks of\nbatch normalization.\nNotice that changes in the output of one layer will tend to cause highly correlated changes in the\nsummed inputs to the next layer, especially with ReLU units whose outputs can change by a lot.\nThis suggests the “covariate shift” problem can be reduced by ﬁxing the mean and the variance of\nthe summed inputs within each layer. We, thus, compute the layer normalization statistics over all\nthe hidden units in the same layer as follows:\nµl = 1H\nH∑\ni=1\nali σl =\nvuu√ 1\nH\nH∑\ni=1\n(\nali−µl)2 (3)\nwhereH denotes the number of hidden units in a layer. The difference between Eq. (2) and Eq. (3)\nis that under layer normalization, all the hidden units in a layer share the same normalization terms\nµ andσ, but different training cases have different normalization terms. Unlike batch normalization,\nlayer normaliztion does not impose any constraint on the size of a mini-batch and it can be used in\nthe pure online regime with "
+          },
+          {
+            "page": 10,
+            "chunk_id": 47,
+            "excerpt": "he hidden units within the same layer. We think further research is needed\nto make layer normalization work well in ConvNets.\n7 Conclusion\nIn this paper, we introduced layer normalization to speed-up the training of neural networks. We\nprovided a theoretical analysis that compared the invariance properties of layer normalization with\nbatch normalization and weight normalization. We showed that layer normalization is invariant to\nper training-case feature shifting and scaling.\nEmpirically, we showed that recurrent neural networks beneﬁt the most from the proposed method\nespecially for long sequences and small mini-batches.\nAcknowledgments\nThis research was funded by grants from NSERC, CFI, and Google.\n10"
+          }
+        ]
+      }
+    ],
+    "any_evidence": true,
+    "gold_anchor_hit": false,
+    "gold_page_hit": true
+  },
+  {
+    "id": "q04",
+    "by_paper": [
+      {
+        "source_pdf": "2206.07682v2.pdf",
+        "top3": [
+          {
+            "page": 3,
+            "chunk_id": 164,
+            "excerpt": "ght such\nemergent abilities spanning ﬁve language model families from various work.\nBIG-Bench. Figure 2A–D depicts four emergent few-shot prompted tasks from BIG-Bench, a crowd-sourced\nsuite of over 200 benchmarks for language model evaluation (BIG-Bench, 2022). Figure 2A shows an arithmetic\nbenchmark that tests 3-digit addition and subtraction, as well as 2-digit multiplication. GPT-3 and LaMDA\n(Thoppilan et al., 2022) have close-to-zero performance for several orders of magnitude of training compute,\nbefore performance jumps to sharply above random at2 · 1022 training FLOPs (13B parameters) for GPT-3,\nand 1023 training FLOPs (68B parameters) for LaMDA. Similar emergent behavior also occurs at around the\nsame model scale for other tasks, such as transliterating from the International Phonetic Alphabet (Figure 2B),\nrecovering a word from its scrambled letters (Figure 2C), and Persian question-answering (Figure 2D). Even\nmore emergent abilities from BIG-Bench are given in Appendix E.\nTruthfulQA. Figure 2E shows few-shot prompted performance on the TruthfulQA benchmark, which\nmeasures the ability to answer questions truthfully (Lin et al., 2021). This benchmark is adversarially curated\nagainst GPT-3 models, which do not perform abov"
+          },
+          {
+            "page": 3,
+            "chunk_id": 163,
+            "excerpt": "ie.\nSentiment:\npositive.\nFigure 1: Example of an input and\noutput for few-shot prompting.\nWe ﬁrst discuss emergent abilities in theprompting paradigm, as pop-\nularized by GPT-3 (Brown et al., 2020).2 In prompting, a pre-trained\nlanguage model is given a prompt (e.g. a natural language instruction)\nof a task and completes the response without any further training\nor gradient updates to its parameters. Brown et al. (2020) proposed\nfew-shot prompting, which includes a few input-output examples in\nthe model’s context (input) as a preamble before asking the model to\nperform the task for an unseen inference-time example. An example prompt is shown in Figure 1.\nThe ability to perform a task via few-shot prompting is emergent when a model has random performance\nuntil a certain scale, after which performance increases to well-above random. Figure 2 shows eight such\nemergent abilities spanning ﬁve language model families from various work.\nBIG-Bench. Figure 2A–D depicts four emergent few-shot prompted tasks from BIG-Bench, a crowd-sourced\nsuite of over 200 benchmarks for language model evaluation (BIG-Bench, 2022). Figure 2A shows an arithmetic\nbenchmark that tests 3-digit addition and subtraction, as well as 2-digit multiplication. GPT-3 a"
+          },
+          {
+            "page": 2,
+            "chunk_id": 159,
+            "excerpt": ". When visualized via a scaling curve (x-axis: model\nscale, y-axis: performance), emergent abilities show a clear pattern—performance is near-random until a\ncertain critical threshold of scale is reached, after which performance increases to substantially above random.\nThis qualitative change is also known as aphase transition—a dramatic change in overall behavior that would\nnot have been foreseen by examining smaller-scale systems (Huberman & Hogg, 1987).\nToday’s language models have been scaled primarily along three factors: amount of computation, number\nof model parameters, and training dataset size (Kaplan et al., 2020; Hoﬀmann et al., 2022). In this paper,\nwe will analyze scaling curves by plotting the performance of diﬀerent models where training compute for\neach model is measured in FLOPs on thex-axis (Hoﬀmann et al., 2022). Because language models trained\nwith more compute tend to also have more parameters, we additionally show plots with number of model\nparameters as thex-axis in Appendix D (see Figure 11 and Figure 12, as well as Figure 4 and Figure 10).\nUsing training FLOPs or model parameters as thex-axis produces curves with similar shapes due to the fact\nthat most dense Transformer language model families have scaled"
+          }
+        ]
+      }
+    ],
+    "any_evidence": true,
+    "gold_anchor_hit": false,
+    "gold_page_hit": true
+  },
+  {
+    "id": "q05",
+    "by_paper": [
+      {
+        "source_pdf": "1706.03762v1_img.pdf",
+        "top3": [
+          {
+            "page": 7,
+            "chunk_id": 82,
+            "excerpt": "2014 English-French dataset consisting of 36M sentences and split tokens into a 32000 word-piece\nvocabulary [34]. Sentence pairs were batched together by approximate sequence length. Each training\nbatch contained a set of sentence pairs containing approximately 25000 source tokens and 25000\ntarget tokens.\n5.2 Hardware and Schedule\nWe trained our models on one machine with 8 NVIDIA P100 GPUs. For our base models using\nthe hyperparameters described throughout the paper, each training step took about 0.4 seconds. We\ntrained the base models for a total of 100,000 steps or 12 hours. For our big models,(described on the\nbottom line of table③, step time was 1.0 seconds, and the models were trained for 300,000 steps or\n3.5 days.\n5.3 Optimizer\nWe used the Adam optimizer [18] with β1 = 0.9, β2 = 0.98 and ε = 10−9. We varied the learning\nrate over the course of training, according to the formula:\n(3)\nThis corresponds to increasing the learning rate linearly for the first warmup_steps training steps,\nand decreasing it thereafter proportionally to the inverse square root of the step number. We used\nwarmup_steps = 4000.\n5.4 Regularization\nWe employ three types of re"
+          },
+          {
+            "page": 2,
+            "chunk_id": 63,
+            "excerpt": "computation 29], while also improving model performance in case of the latter. The fundamental\nconstraint of sequential computation, however, remains.\nAttention mechanisms have become an integral part of compelling sequence modeling and transduc-\ntion models in various tasks, allowing modeling of dependencies without regard to their distance in\nthe input or output sequences [2 17]. In all but a few cases [25], however, such attention mechanisms\nare used in conjunction with a recurrent network.\nIn this work we propose the Transformer, a model architecture eschewing recurrence and instead\nrelying entirely on an attention mechanism to draw global dependencies between input and output.\nThe Transformer allows for significantly more parallelization and can reach a new state of the art in\ntranslation quality after being trained for as little as twelve hours on eight P100 GPUs.\n2 Background\nThe goal of reducing sequential computation also forms the foundation of the Extended Neural GPU\n[21]. ByteNet 16and ConvS2S9, all of which use convolutional neural networks as basic building\nblock, computing hidden representations in parallel for all input and output posit"
+          },
+          {
+            "page": 7,
+            "chunk_id": 84,
+            "excerpt": "oss positions. The softmax activations yielding attention weights\ncan then be seen as the analogue of hidden layer activations. A natural possibility is to extend dropout\n[30] to attention. We implement attention dropout by dropping out attention weights as,\nAttention(Q, K, V) = dropout(softmax(\nQKT\n√d\n-))V\nIn addition to residual dropout, we found attention dropout to be beneficial for our parsing experi-\nments.\nLabel Smoothing During training, we employed label smoothing of value els = 0.1 [32]. This\nhurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score.\n6 Results\n6.1 Machine Translation\nOn the WMT 2014 English-to-German translation task, Our big transformer model (Transformer\nthan 2.0 BLEU, establishing a new state-of-the-art BLEU score of 28.4. The configuration of this\nmodel is listed in the bottom line of Table 3 Training took 3.5 days on 8 P100 GPUs. Even our base\nmodel surpasses all previously published models and ensembles, at a fraction of the training cost of\nany of the previous best models.\n7"
+          }
+        ]
+      }
+    ],
+    "any_evidence": true,
+    "gold_anchor_hit": true,
+    "gold_page_hit": true
+  }
+]

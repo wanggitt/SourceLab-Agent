@@ -1,0 +1,20 @@
+[
+  {
+    "id": "e01",
+    "source_pdf": "",
+    "page": null,
+    "formula_identifier": "",
+    "original_formula": "",
+    "model_explanation": "",
+    "input_review": null,
+    "transform_review": null,
+    "output_review": null,
+    "citation_review": null,
+    "reviewer": "",
+    "notes": "",
+    "prompt_tokens": null,
+    "completion_tokens": null,
+    "input_usd_per_million": null,
+    "output_usd_per_million": null
+  }
+]

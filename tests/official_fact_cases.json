@@ -1,0 +1,51 @@
+{
+  "source_file": "1706.03762v7.pdf",
+  "description": "人工对照官方 PDF 原文建立的小样本事实标签。只检验检索证据覆盖，不检验生成回答正确率。",
+  "cases": [
+    {
+      "id": "author_6_affiliation",
+      "question": "Attention Is All You Need 的第六位作者是谁，在哪个机构工作？",
+      "expected_pages": [1],
+      "reference_answer": "Aidan N. Gomez；University of Toronto。",
+      "required_evidence": ["Aidan N. Gomez", "University of Toronto"]
+    },
+    {
+      "id": "adam_beta",
+      "question": "这篇论文中 Adam 优化器的 β1 和 β2 分别设为多少？",
+      "expected_pages": [7],
+      "reference_answer": "β1=0.9；β2=0.98。",
+      "required_evidence": ["Adam optimizer", "0.9", "0.98"]
+    },
+    {
+      "id": "base_gpu",
+      "question": "Transformer base 模型训练使用多少张 GPU？具体是什么型号？",
+      "expected_pages": [7],
+      "reference_answer": "一台机器上的 8 张 NVIDIA P100 GPU。",
+      "required_evidence": ["8 NVIDIA P100 GPUs", "base models"]
+    },
+    {
+      "id": "big_en_de_bleu",
+      "question": "Transformer big 的 English-to-German BLEU 分数和此前最佳集成系统的分数分别是多少？",
+      "expected_pages": [8],
+      "reference_answer": "Transformer (big) 为 28.4；表 2 中最佳此前集成系统 ConvS2S Ensemble 为 26.36。按表中数字相减约提升 2.04。",
+      "required_evidence": ["ConvS2S Ensemble", "26.36", "Transformer (big)", "28.4"]
+    },
+    {
+      "id": "layer_norm_reference",
+      "question": "列出论文引用的 Layer Normalization 文献的作者、年份和 arXiv 编号。",
+      "expected_pages": [10],
+      "reference_answer": "Jimmy Lei Ba、Jamie Ryan Kiros、Geoffrey E Hinton；2016；arXiv:1607.06450。",
+      "required_evidence": ["Jimmy Lei Ba", "Jamie Ryan Kiros", "Geoffrey E Hinton", "1607.06450", "2016"]
+    }
+  ],
+  "negative_controls": [
+    {
+      "question": "zzqplmxyvvvzz",
+      "expected": "no_retrieved_evidence"
+    },
+    {
+      "question": "What GPU was used to train fictional XQ-9999 accelerator?",
+      "expected": "no_retrieved_evidence"
+    }
+  ]
+}

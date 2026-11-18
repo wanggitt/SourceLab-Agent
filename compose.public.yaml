@@ -1,0 +1,49 @@
+# Standalone public deployment. Do not combine with compose.yaml: the latter
+# intentionally publishes the unauthenticated application on localhost.
+services:
+  sourcelab:
+    build: .
+    restart: unless-stopped
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "8765"
+      # Intentionally no model credentials in the public evaluation instance.
+      # Enabling billable model endpoints needs an explicit budget and review.
+    expose:
+      - "8765"
+    volumes:
+      - source_data:/workspace/research_agent_mvp/data
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8765/api/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  gateway:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      sourcelab:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      PUBLIC_DOMAIN: ${PUBLIC_DOMAIN:?Set PUBLIC_DOMAIN in public.env}
+      PUBLIC_EMAIL: ${PUBLIC_EMAIL:?Set PUBLIC_EMAIL in public.env}
+      ACCESS_USER: ${ACCESS_USER:?Set ACCESS_USER in public.env}
+      ACCESS_PASSWORD_HASH: ${ACCESS_PASSWORD_HASH:?Set ACCESS_PASSWORD_HASH in public.env}
+    volumes:
+      - ./Caddyfile.public:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  source_data:
+  caddy_data:
+  caddy_config:

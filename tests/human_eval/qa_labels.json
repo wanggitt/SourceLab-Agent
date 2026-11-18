@@ -1,0 +1,150 @@
+[
+  {
+    "id": "q01",
+    "task_type": "fact",
+    "source_pdfs": [
+      "1706.03762v7.pdf"
+    ],
+    "question": "Transformer base 模型使用什么硬件？",
+    "answerable": true,
+    "gold_answer": "在 8 块 P100 GPU 上，训练耗时 3.5 天；我们通过将训练时间、使用的 GPU 数量以及每块 GPU 的持续单精度浮点运算能力估算值相乘，来估算训练模型所消耗的浮点运算次数。我们分别采用 K80、K40、M40 和 P100 的 2.8、3.7、6.0 和 9.5 TFLOPS 作为其持续单精度浮点运算能力的估算值。",
+    "gold_pages": [
+      8
+    ],
+    "gold_anchors": [
+      "Training took 3.5 days on 8 P100 GPUs;We estimate the number of floating point operations used to train a",
+      "model by multiplying the training time,the number of GPUs used,and an estimate of the sustained",
+      "single-precision floating-point capacity of each GPU5. We used values of 2.8,3.7,6.0 and 9.5 TFLOPS for K80,K40,M40 and P100, espectively"
+    ],
+    "answer_review": "partial",
+    "evidence_location_review": "correct",
+    "reviewer": "w",
+    "notes": "少了一小段，可能是因为在脚注页面边缘的原因",
+    "model_answer": "Transformer base 模型在一台配备 8 块 NVIDIA P100 GPU 的机器上训练 [7]。base 模型每个训练步约耗时 0.4 秒，共训练 100,000 步或 12 小时 [7]。",
+    "gold_pages_by_pdf": {},
+    "gold_anchors_by_pdf": {}
+  },
+  {
+    "id": "q02",
+    "task_type": "negative",
+    "source_pdfs": [
+      "1706.03762v7.pdf"
+    ],
+    "question": "论文是否证明 Transformer 在所有语言任务上永远优于其他方法？",
+    "answerable": null,
+    "gold_answer": "否。论文没有证明 Transformer 在所有语言任务上永远优于其他方法；它只报告了在特定机器翻译任务和英语句法分析任务上的实验结果。",
+    "gold_pages": [
+      1,
+      9
+    ],
+    "gold_anchors": [
+      "Experiments on two machine translation tasks show these models to be superior in quality",
+      "We show that the Transformer generalizes well to other tasks",
+      "English constituency parsing both with large and limited training data"
+    ],
+    "answer_review": null,
+    "evidence_location_review": null,
+    "reviewer": "w",
+    "notes": "论文仅展示有限任务上的优越性与泛化实验，未给出“所有语言任务、永远优于其他方法”的证明。",
+    "model_answer": "已找到以下原文片段。模型接口或草稿校验未通过，不对片段进行事实推断；请点击来源核对。",
+    "gold_pages_by_pdf": {},
+    "gold_anchors_by_pdf": {}
+  },
+  {
+    "id": "q03",
+    "task_type": "cross_paper",
+    "source_pdfs": [
+      "1706.03762v7.pdf",
+      "1607.06450v1.pdf"
+    ],
+    "question": "这两篇论文在归一化的作用上有什么有据可查的联系？",
+    "answerable": true,
+    "gold_answer": "有据可查的联系是：Transformer 在编码器和解码器的每个子层中采用“残差连接后接 layer normalization”，并引用 [1]；Layer Normalization 论文提出 layer normalization 是对单个训练样本中一层所有 summed inputs 计算均值和方差来进行归一化，不依赖 mini-batch，训练与测试计算一致，并可逐时间步用于 RNN、稳定隐藏状态动态。因此联系是 Transformer 采用了该论文提出的层归一化机制用于子层输出归一化/训练稳定；但不能据此推断两文对归一化作用的全部动机和实验结论完全相同。",
+    "gold_pages": [],
+    "gold_anchors": [],
+    "answer_review": null,
+    "evidence_location_review": null,
+    "reviewer": "",
+    "notes": "跨论文证据链为 Transformer 引用并采用 layer normalization，Layer Normalization 论文给出其逐样本、层内归一化定义及适用 RNN/稳定训练的作用；需注意两文作用表述侧重不同，不能扩大为完全相同结论。",
+    "model_answer": "页面实际显示：逐篇独立检索原文，展示证据矩阵而非自动下结论。未生成跨论文事实性回答；请根据两篇论文各自的原文证据人工比较。",
+    "gold_pages_by_pdf": {
+      "1706.03762v7.pdf": [
+        3
+      ],
+      "1607.06450v1.pdf": [
+        1,
+        2,
+        3
+      ]
+    },
+    "gold_anchors_by_pdf": {
+      "1706.03762v7.pdf": [
+        "We employ a residual connection [11] around each of the two sub-layers, followed by layer normalization [1]."
+      ],
+      "1607.06450v1.pdf": [
+        "we transpose batch normalization into layer normalization by computing the mean and variance used for normalization from all of the summed inputs to the neurons in a layer on a single training case.",
+        "Unlike batch normalization, layer normalization performs exactly the same computation at training and test times.",
+        "It is also straightforward to apply to recurrent neural networks by computing the normalization statistics separately at each time step.",
+        "all the hidden units in a layer share the same normalization terms",
+        "layer normalization does not impose any constraint on the size of a mini-batch",
+        "Layer normalization is very effective at stabilizing the hidden state dynamics in recurrent networks."
+      ]
+    }
+  },
+  {
+    "id": "q04",
+    "task_type": "layout",
+    "source_pdfs": [
+      "2206.07682v2.pdf"
+    ],
+    "question": "Figure 2 的横纵轴及图例分别是什么？",
+    "answerable": true,
+    "gold_answer": "Figure 2 的横轴是模型规模（training FLOPs，即训练计算量）；纵轴是任务性能（performance）；图例包括五个语言模型家族 LaMDA、GPT-3、Gopher、Chinchilla、PaLM，以及 Random（随机基线）。",
+    "gold_pages": [
+      2,
+      3,
+      4
+    ],
+    "gold_anchors": [
+      "When visualized via a scaling curve (x-axis: model scale, y-axis: performance)",
+      "where training compute for each model is measured in FLOPs on the x-axis",
+      "Figure 2 shows eight such emergent abilities spanning five language model families from various work.",
+      "LaMDA",
+      "GPT-3",
+      "Gopher",
+      "Chinchilla",
+      "PaLM",
+      "Random"
+    ],
+    "answer_review": null,
+    "evidence_location_review": null,
+    "reviewer": "",
+    "notes": "Figure 2 的横纵轴在正文中明确为 model scale/training FLOPs 与 performance，图例为五个模型家族及 Random 基线。网站本次实际查询使用已导入文件 209_Emergent_Abilities_of_Larg.pdf；它与金标准文件 2206.07682v2.pdf 是同一论文版本线索，仍应人工确认版本。",
+    "model_answer": "已找到以下原文片段。模型接口或草稿校验未通过，不对片段进行事实推断；请点击来源核对。",
+    "gold_pages_by_pdf": {},
+    "gold_anchors_by_pdf": {}
+  },
+  {
+    "id": "q05",
+    "task_type": "ocr",
+    "source_pdfs": [
+      "1706.03762v1_img.pdf"
+    ],
+    "question": "Transformer base 模型训练硬件是什么？",
+    "answerable": true,
+    "gold_answer": "Transformer base 模型训练硬件是一台机器上的 8 块 NVIDIA P100 GPU。",
+    "gold_pages": [
+      7
+    ],
+    "gold_anchors": [
+      "We trained our models on one machine with 8 NVIDIA P100 GPUs."
+    ],
+    "answer_review": null,
+    "evidence_location_review": null,
+    "reviewer": "",
+    "notes": "第 5.2 节 “Hardware and Schedule” 明确说明训练使用一台机器和 8 块 NVIDIA P100 GPU。",
+    "model_answer": "Transformer base 模型在一台配备 8 块 NVIDIA P100 GPU 的机器上训练 [1]。base 模型每个训练步约耗时 0.4 秒，共训练 100,000 步或 12 小时 [1]。",
+    "gold_pages_by_pdf": {},
+    "gold_anchors_by_pdf": {}
+  }
+]

@@ -1,0 +1,27 @@
+services:
+  sourcelab:
+    build: .
+    restart: unless-stopped
+    # Local-only demo: do NOT publish the unauthenticated API to 0.0.0.0.
+    ports:
+      - "127.0.0.1:${SOURCELAB_HOST_PORT:-8765}:8765"
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "8765"
+      LLM_CHAT_ENDPOINT: ${LLM_CHAT_ENDPOINT:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+    volumes:
+      - source_data:/workspace/research_agent_mvp/data
+      - ../pdf:/workspace/pdf:ro
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8765/api/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  source_data:

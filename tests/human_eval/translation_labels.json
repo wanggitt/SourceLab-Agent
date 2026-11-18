@@ -1,0 +1,17 @@
+[
+  {
+    "id": "t01",
+    "source_pdf": "1706.03762v7.pdf",
+    "page": null,
+    "source_text": "",
+    "translation_text": "",
+    "glossary": [],
+    "semantic_review": null,
+    "reviewer": "",
+    "notes": "",
+    "prompt_tokens": null,
+    "completion_tokens": null,
+    "input_usd_per_million": null,
+    "output_usd_per_million": null
+  }
+]

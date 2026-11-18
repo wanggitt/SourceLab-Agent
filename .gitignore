@@ -1,0 +1,22 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# Secrets and local state
+.env
+public.env
+data/
+*.sqlite3
+
+# Local rendered/temporary QA artifacts
+_docx_qa/
+tests/human_eval/previews/
+tests/ui_qa_*.png
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

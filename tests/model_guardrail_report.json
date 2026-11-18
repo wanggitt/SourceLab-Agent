@@ -1,0 +1,50 @@
+{
+  "test_type": "synthetic_guardrail_checks_only",
+  "passed": 6,
+  "total": 6,
+  "cases": [
+    {
+      "name": "two_supported_claims",
+      "expected_accept": true,
+      "accepted": true,
+      "behaved_as_expected": true,
+      "reason": ""
+    },
+    {
+      "name": "wrong_citation",
+      "expected_accept": false,
+      "accepted": false,
+      "behaved_as_expected": true,
+      "reason": "草稿第 1 句的数值未出现在该句引用的原文中：8"
+    },
+    {
+      "name": "unsupported_number",
+      "expected_accept": false,
+      "accepted": false,
+      "behaved_as_expected": true,
+      "reason": "草稿第 1 句的数值未出现在该句引用的原文中：999"
+    },
+    {
+      "name": "uncited_claim",
+      "expected_accept": false,
+      "accepted": false,
+      "behaved_as_expected": true,
+      "reason": "草稿第 2 句未提供对应的 [n] 证据编号"
+    },
+    {
+      "name": "missing_source_id",
+      "expected_accept": false,
+      "accepted": false,
+      "behaved_as_expected": true,
+      "reason": "草稿引用了不存在的证据编号"
+    },
+    {
+      "name": "prose_without_numbers_but_wrong_meaning",
+      "expected_accept": true,
+      "accepted": true,
+      "behaved_as_expected": true,
+      "reason": ""
+    }
+  ],
+  "limits": "最后一条错误语义陈述刻意穿过了规则检查，证明此机制无法验证推断语义；不能据此报告模型回答正确率、幻觉率或在真实科研问题上的安全保障水平。"
+}

@@ -1,0 +1,21 @@
+{
+    email {$PUBLIC_EMAIL}
+}
+
+{$PUBLIC_DOMAIN} {
+    basic_auth {
+        {$ACCESS_USER} {$ACCESS_PASSWORD_HASH}
+    }
+
+    request_body {
+        max_size 32MB
+    }
+
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy no-referrer
+        X-Frame-Options DENY
+    }
+
+    reverse_proxy sourcelab:8765
+}
