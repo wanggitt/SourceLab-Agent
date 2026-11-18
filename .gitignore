@@ -9,6 +9,7 @@ __pycache__/
 public.env
 data/
 *.sqlite3
+REMOTE_DEMO_SECURITY.md
 
 # Local rendered/temporary QA artifacts
 _docx_qa/
